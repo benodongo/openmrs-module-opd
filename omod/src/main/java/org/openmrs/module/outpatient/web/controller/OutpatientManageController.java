@@ -40,6 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class  OutpatientManageController {
 	
 	protected final Log log = LogFactory.getLog(getClass());
+    //add  an outpatient
 
     @RequestMapping(value = "/module/outpatient/create", method = RequestMethod.GET)
     public String create(@RequestParam(value = "id", required = false) String id,
