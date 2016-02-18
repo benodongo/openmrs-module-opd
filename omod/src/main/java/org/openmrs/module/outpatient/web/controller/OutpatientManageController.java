@@ -17,13 +17,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.*;
 import org.openmrs.api.PatientService;
+import org.openmrs.api.PersonService;
 import org.openmrs.api.context.Context;
 import org.openmrs.validator.PatientIdentifierValidator;
 import org.springframework.stereotype.Controller;
+import org.openmrs.web.WebConstants;
+//import org.openmrs.module.outpatient.usermethod.ConvertStringToDate;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,8 +51,85 @@ public class  OutpatientManageController {
     public void manage(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
     }
+    //create patient form
+    @RequestMapping(value = "/module/outpatient/create", method = RequestMethod.GET)
+    public void create(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
+    }
+    //register patient(child)
+    @RequestMapping(value = "/module/outpatient/registerchild.form", method=RequestMethod.POST)
+    public String  registerpatient(ModelMap model, WebRequest webRequest, HttpSession httpSession,
+                                   @RequestParam(value = "givenName", required = true) String givenName,
+                                   @RequestParam(value = "familyName", required = true) String familyName,
+                                   @RequestParam(value = "middleName", required = false) String middleName,
+                                   @RequestParam(value = "dateofbirth", required = true) String dateofbirth,
+                                   @RequestParam(value = "gender", required = true) String gender,
+                                   @RequestParam(value = "nationalId", required = true) String nationalId,
+                                   @RequestParam(value = "address",required = false) String address,
+                                   @RequestParam(value = "city", required = true) String city,
+                                   @RequestParam(value = "postalcode", required = false) String postalcode,
+                                   @RequestParam(value = "country", required = true) String country
+    )
+    {
+        try {
+            //creating the services
+            PatientService patientService=Context.getPatientService();
+            PersonService personService=Context.getPersonService();
+
+            Patient patient=new Patient();
+            PersonName personName = new PersonName();
+
+            //adding the names
+            personName.setGivenName(givenName);
+            personName.setFamilyName(familyName);
+            personName.setMiddleName(middleName);
+
+            patient.addName(personName);
+
+            patient.setGender(gender);
+           // ConvertStringToDate convertStringToDate=new ConvertStringToDate();
+           // Date birthdate=dateofbirth;
+            //patient.setBirthdate(dateofbirth);
+
+            //Address and location
+            PersonAddress personAddress=new PersonAddress();
+            personAddress.setAddress1(address);
+            personAddress.setCityVillage(city);
+            personAddress.setPostalCode(postalcode);
+            personAddress.setCountry(country);
+            patient.addAddress(personAddress);
+
+            //create a patient Identifer
+            PatientIdentifier openmrsId = new PatientIdentifier();
+
+//            String TARGET_ID_KEY = "patientmodule.idType";
+//            String TARGET_ID = Context.getAdministrationService().getGlobalProperty(TARGET_ID_KEY);
+
+            PatientIdentifierType patientIdentifierType = patientService.getPatientIdentifierTypeByUuid("8d79403a-c2cc-11de-8d13-0010c6dffd0f");
+
+            openmrsId.setIdentifier(nationalId);
+            openmrsId.setDateCreated(new Date());
+            openmrsId.setLocation(Context.getLocationService().getDefaultLocation());
+            openmrsId.setIdentifierType(patientIdentifierType);
 
 
+            PatientIdentifierValidator.validateIdentifier(openmrsId);
+            patient.addIdentifier(openmrsId);
+            //saving the patient
+            if (!patientService.isIdentifierInUseByAnotherPatient(openmrsId)) {
+                patientService.savePatient(patient);
+            }
 
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Registered Successfully");
+            return "redirect:create.form";
+        }
+        catch (Exception ex)
+        {
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Registration failed-Patient Id taken");
+            return "redirect:create.form";
 
+        }
+
+    }
 }
