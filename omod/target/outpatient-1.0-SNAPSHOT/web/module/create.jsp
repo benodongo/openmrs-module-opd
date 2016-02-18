@@ -4,6 +4,7 @@
 <div class="row">
     <div class="jumbotron col-md-8 col-md-offset-2">
         <h2 class="text-center">Child Clinic Registration</h2>
+        <h3 class="text-center" style="text-decoration-color: #2aabd2">immunization registration</h3>
         <div class="form-group col-md-offset-2 col-md-8">
             <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/registerchild.form' />">
 
@@ -23,8 +24,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label>National ID</label>
-                    <input type="number" class="form-control" name="nationalId" value="" size="12" maxlength="8" required />
+                    <label>Father's Name</label>
+                    <input type="text" class="form-control" name="fathername" value="" size="12" maxlength="8" required />
+                </div>
+                <div class="form-group">
+                    <label>Mother's Name</label>
+                    <input type="text" class="form-control" name="mothername" value="" size="12" maxlength="8" required />
                 </div>
 
                 <div class="form-group">
@@ -119,7 +124,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="button" class="btn btn-success">Next</button>Register</button>
+                        <button type="button" class="btn btn-success">Register</button>
                     </div>
 
 
