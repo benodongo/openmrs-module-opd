@@ -1,4 +1,4 @@
-package org.openmrs.module.basicexample.web.controller;
+package org.openmrs.module.outpatient.web.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

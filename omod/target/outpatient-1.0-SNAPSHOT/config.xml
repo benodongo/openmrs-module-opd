@@ -14,7 +14,9 @@
 	<updateURL>https://modules.openmrs.org/modules/download/outpatient/update.rdf</updateURL>
 	<require_version>1.8.2</require_version>
 	<!-- / Module Properties -->
-
+   <require_modules>
+	   <require_module version="2.6">org.openmrs.module.htmlformentry</require_module>
+   </require_modules>
 	
 	<!-- Module Activator -->
 	<activator>org.openmrs.module.outpatient.OutpatientActivator</activator>
