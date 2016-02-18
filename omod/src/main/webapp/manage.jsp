@@ -9,14 +9,14 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-2">
-                <a  style="text-decoration: none"href="#">
+                <a style="text-decoration: none" href="<c:url value='module/outpatient/htmlFormEntry.form'/>">
                     <i class="fa fa-search fa-5x"></i><br>
                     <span>Search Patient</span>
                 </a>
             </div>
 
             <div class="col-md-2">
-                <a style="text-decoration: none" href="#">
+                <a style="text-decoration: none" href="<c:url value='/findPatient.htm'/>">
                     <i class="fa fa-user-plus fa-5x"></i><br>
                     <span>Add Patient</span>
                 </a>
@@ -36,7 +36,7 @@
             <div class="col-md-2">
                 <a style="text-decoration: none" href="#">
                     <i class="fa fa-stethoscope fa-5x"></i><br>
-                    <span>Laboratory</span>
+                    <span>Child Clinic</span>
                 </a>
             </div>
             <div class="col-md-2">

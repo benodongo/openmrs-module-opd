@@ -71,6 +71,16 @@
 		</dependency>
 		
 		<!-- End OpenMRS core -->
+		<!--begins htmlformentry module-->
+        <dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>htmlformentry-api</artifactId>
+            <type>jar</type>
+			<scope>provided</scope>
+
+        </dependency>
+
+		<!--Ends htmlformentry module-->
 
 	</dependencies>
 
