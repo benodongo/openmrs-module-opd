@@ -23,9 +23,9 @@
 		</dependency> 
 		-->
 
-		
-		
+		<!--htmlformentry -->
 
+      <!--End of htmlformentry-->
 		<!-- Begin OpenMRS core -->
 		
 		<dependency>

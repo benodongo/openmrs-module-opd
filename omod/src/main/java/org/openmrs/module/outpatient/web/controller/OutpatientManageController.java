@@ -17,17 +17,23 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.*;
 import org.openmrs.api.PatientService;
+import org.openmrs.api.PersonService;
 import org.openmrs.api.context.Context;
 import org.openmrs.validator.PatientIdentifierValidator;
 import org.springframework.stereotype.Controller;
+import org.openmrs.web.WebConstants;
+//import org.openmrs.module.outpatient.usermethod.ConvertStringToDate;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.*;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,76 +47,136 @@ public class  OutpatientManageController {
 	
 	protected final Log log = LogFactory.getLog(getClass());
 
+//display the dashboard
+    @RequestMapping(value = "/module/outpatient/manage", method = RequestMethod.GET)
+    public void manage(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+    }
+    //create patient form
     @RequestMapping(value = "/module/outpatient/create", method = RequestMethod.GET)
-    public String create(@RequestParam(value = "id", required = false) String id,
-                         @RequestParam(value = "surname", required = false) String surname,
-                         @RequestParam(value = "fname", required = false) String fname,
-                         @RequestParam(value = "lname", required = false) String lname,
-                         @RequestParam(value = "dob", required = false) Date dob,
-                         @RequestParam(value = "gender", required = false) String gender,
-                         @RequestParam(value = "address", required = false) String address
-    ) {
-//		ModelAndView model = new ModelAndView();
-//		model.setViewName("manage");
-        //int pid = Integer.parseInt(id);
-
-
-
-
-
-
-        Patient patient = new Patient();
-        PersonName personName = new PersonName();
-        PersonAddress personAddress = new PersonAddress();
-
-//			PatientIdentifier patientIdentifier = new PatientIdentifier();
-//			PatientIdentifierType patientIdentifierType = Context.getPatientService().getPatientIdentifierTypeByUuid("8d79403a-c2cc-11de-8d13-0010c6dffd0f");
-//			patientIdentifier.setDateCreated(new Date());
-//			patientIdentifier.setIdentifierType(patientIdentifierType);
-//			patientIdentifier.setLocation(Context.getLocationService().getDefaultLocation());
-//			patientIdentifier.setIdentifier(String.valueOf(id));
-//			patientIdentifier.setPreferred(true);
-        //patientIdentifier.setPatientIdentifierId(pid);
-        personName.setGivenName(surname);
-        personName.setMiddleName(fname);
-        personName.setFamilyName(lname);
-        personName.setPreferred(true);
-
-        personAddress.setAddress1(address);
-
-        patient.setBirthdate(dob);
-        patient.setGender(gender);
-
-        patient.addName(personName);
-
-        PatientIdentifier openmrsId = new PatientIdentifier();
-        PatientService patientService = Context.getPatientService();
-
-        String TARGET_ID_KEY = "patientmodule.idType";
-        String TARGET_ID = Context.getAdministrationService().getGlobalProperty(TARGET_ID_KEY);
-        PatientIdentifierType patientIdentifierType = patientService.getPatientIdentifierTypeByName(TARGET_ID);
-        openmrsId.setIdentifier(id);
-        openmrsId.setDateCreated(new Date());
-        openmrsId.setLocation(Context.getLocationService().getDefaultLocation());
-        openmrsId.setIdentifierType(patientIdentifierType);
-        PatientIdentifierValidator.validateIdentifier(openmrsId);
-        patient.addIdentifier(openmrsId);
-        //save the if id not taken patient
-        if (!patientService.isIdentifierInUseByAnotherPatient(openmrsId)) {
-            patientService.savePatient(patient);
-        }
-        ModelAndView model = new ModelAndView();
-
+    public void create(ModelMap model) {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
-        model.addObject("patients", allPatients);
-        return "redirect:manage.form";
+        model.addAttribute("patients", allPatients);
+    }
+    //immunization  form
+    @RequestMapping(value = "/module/outpatient/immunization", method = RequestMethod.GET)
+    public void immunization(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
+    }
+    //maternity form
+    @RequestMapping(value = "/module/outpatient/maternity", method = RequestMethod.GET)
+    public void maternity(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
+    }
+    //register patient(child)
+    @RequestMapping(value = "/module/outpatient/registerchild.form", method=RequestMethod.POST)
+    public String  registerpatient(ModelMap model, WebRequest webRequest, HttpSession httpSession,
+                                   @RequestParam(value = "givenName", required = true) String givenName,
+                                   @RequestParam(value = "familyName", required = true) String familyName,
+                                   @RequestParam(value = "middleName", required = false) String middleName,
+                                   @RequestParam(value = "dateofbirth", required = true) String dateofbirth,
+                                   @RequestParam(value = "gender", required = true) String gender,
+                                   @RequestParam(value = "nationalId", required = true) String nationalId,
+                                   @RequestParam(value = "address",required = false) String address,
+                                   @RequestParam(value = "city", required = true) String city,
+                                   @RequestParam(value = "postalcode", required = false) String postalcode,
+                                   @RequestParam(value = "country", required = true) String country
+    )
+    {
+        try {
+            //creating the services
+            PatientService patientService=Context.getPatientService();
+            PersonService personService=Context.getPersonService();
+
+            Patient patient=new Patient();
+            PersonName personName = new PersonName();
+
+            //adding the names
+            personName.setGivenName(givenName);
+            personName.setFamilyName(familyName);
+            personName.setMiddleName(middleName);
+
+            patient.addName(personName);
+
+            patient.setGender(gender);
+           // ConvertStringToDate convertStringToDate=new ConvertStringToDate();
+           // Date birthdate=dateofbirth;
+            //patient.setBirthdate(dateofbirth);
+
+            //Address and location
+            PersonAddress personAddress=new PersonAddress();
+            personAddress.setAddress1(address);
+            personAddress.setCityVillage(city);
+            personAddress.setPostalCode(postalcode);
+            personAddress.setCountry(country);
+            patient.addAddress(personAddress);
+
+            //create a patient Identifer
+            PatientIdentifier openmrsId = new PatientIdentifier();
+
+//            String TARGET_ID_KEY = "patientmodule.idType";
+//            String TARGET_ID = Context.getAdministrationService().getGlobalProperty(TARGET_ID_KEY);
+
+            PatientIdentifierType patientIdentifierType = patientService.getPatientIdentifierTypeByUuid("8d79403a-c2cc-11de-8d13-0010c6dffd0f");
+
+            openmrsId.setIdentifier(nationalId);
+            openmrsId.setDateCreated(new Date());
+            openmrsId.setLocation(Context.getLocationService().getDefaultLocation());
+            openmrsId.setIdentifierType(patientIdentifierType);
 
 
+            PatientIdentifierValidator.validateIdentifier(openmrsId);
+            patient.addIdentifier(openmrsId);
+            //saving the patient
+            if (!patientService.isIdentifierInUseByAnotherPatient(openmrsId)) {
+                patientService.savePatient(patient);
+            }
+
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Registered Successfully");
+            return "redirect:create.form";
+        }
+        catch (Exception ex)
+        {
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Registration failed-Patient Id taken");
+            return "redirect:create.form";
+
+        }
 
     }
-	
-	@RequestMapping(value = "/module/outpatient/manage", method = RequestMethod.GET)
-	public void manage(ModelMap model) {
-		model.addAttribute("user", Context.getAuthenticatedUser());
-	}
+    //list outpatients in search
+    @RequestMapping(value = "/module/outpatient/findPatient", method = RequestMethod.GET)
+    public void findPatient(ModelMap model) {
+        PatientService patientService=Context.getPatientService();
+        //InpatientService inpatientService=Context.getService(InpatientService.class);
+
+        List<Patient> patientList=patientService.getAllPatients();
+      //  List<Inpatient>inpatientList=inpatientService.getAllInpatient();
+        List<Patient>patients=new ArrayList<Patient>();
+
+        Boolean check=true;
+
+      /*  for(Patient patient:patientList)
+        {	check=true;
+
+            for(Inpatient inpatient:inpatientList)
+            {
+                if(patient==inpatient.getPatient())
+                {
+                    check=false;
+                    break;
+                }
+            }
+
+            if(check)
+            {
+                patients.add(patient);
+            }
+
+        }
+ */
+        model.addAttribute("patientList", patients);
+
+    }
 }
