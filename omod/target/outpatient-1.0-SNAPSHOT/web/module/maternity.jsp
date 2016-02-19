@@ -3,8 +3,8 @@
 <%@ include file="template/localHeader.jsp"%>
 <div class="row">
     <div class="jumbotron col-md-8 col-md-offset-2">
-        <h2 class="text-center">Child Clinic Registration</h2>
-        <h3 class="text-center" style="text-decoration-color: #2aabd2">immunization registration</h3>
+        <h2 class="text-center">Maternal Health Registration</h2>
+        <h3 class="text-center" style="text-decoration-color: #2aabd2">Maternity Registration</h3>
         <div class="form-group col-md-offset-2 col-md-8">
             <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/registerchild.form' />">
 
@@ -49,10 +49,32 @@
 					<input type="radio" name="maritalStatus" value="divorced"> Divorced<br>
 					<input type="radio" name="maritalStatus" value="single"> Single<br>
 					<input type="radio" name="maritalStatus" value="separated"> Separated<br>                    
-                </div>                   
+                </div> 
 
+                 <div class="form-group">
+                    <label>Village/Estate/Landmark</label>
+                    <input type="text" class="form-control" name="location" value="" size="20" required />
+                </div>  
 
-                
+                <div class="form-group">
+                    <label>Parity</label>
+                    <input type="text" class="form-control" name="parity" value="" size="20" required />
+                </div> 
+
+                 <div class="form-group">
+                    <label>Gravida</label>
+                    <input type="text" class="form-control" name="gravida" value="" size="20" required />
+                </div>
+
+                 <div class="form-group">
+                    <label>Last Menstrual Period</label>
+                    <input type="date" class="form-control" name="lastMenstrualPeriod" value="" size="3" required />
+                </div>
+
+                <div class="form-group">
+                    <label>EStimated Date of Delivery</label>
+                    <input type="date" class="form-control" name="estimatedDelivery" value="" size="3" required />
+                </div>         
 
 
             </form>

@@ -74,11 +74,7 @@
                 <div class="form-group">
                     <label>EStimated Date of Delivery</label>
                     <input type="date" class="form-control" name="estimatedDelivery" value="" size="3" required />
-                </div>
-
-
-
-                
+                </div>         
 
 
             </form>

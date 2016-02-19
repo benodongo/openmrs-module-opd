@@ -71,7 +71,7 @@ public class  OutpatientManageController {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
         model.addAttribute("patients", allPatients);
     }
-    //register patient(child)
+     //register patient(child)
     @RequestMapping(value = "/module/outpatient/registerchild.form", method=RequestMethod.POST)
     public String  registerpatient(ModelMap model, WebRequest webRequest, HttpSession httpSession,
                                    @RequestParam(value = "givenName", required = true) String givenName,
