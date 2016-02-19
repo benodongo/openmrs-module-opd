@@ -22,6 +22,12 @@
                 </a>
             </div>
             <div class="col-md-2">
+                <a style="text-decoration: none" href="<c:url value='/module/outpatient/create.form'/> ">
+                    <i class="fa fa-stethoscope fa-5x"></i><br>
+                    <span>Child Clinic</span>
+                </a>
+            </div>
+            <div class="col-md-2">
                 <a style="text-decoration: none" href="#">
                     <i class="fa fa-calendar fa-5x"></i><br>
                     <span>Appointments</span>
@@ -33,12 +39,7 @@
                     <span>Active Visits</span>
                 </a>
             </div>
-            <div class="col-md-2">
-                <a style="text-decoration: none" href="<c:url value='/module/outpatient/create.form'/> ">
-                    <i class="fa fa-stethoscope fa-5x"></i><br>
-                    <span>Child Clinic</span>
-                </a>
-            </div>
+
             <div class="col-md-2">
                 <a style="text-decoration: none" href="#">
                     <i class="fa fa-medkit fa-5x"></i><br>

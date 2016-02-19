@@ -1,10 +1,17 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="template/localHeader.jsp"%>
+<ul id="menu">
+    <li class="first">
+        <a href="<c:url value='/module/outpatient/create.form'/> ">Child Clinic</a>
+    </li>
+    <li class="first">
+        <a href="<c:url value='/module/outpatient/immunization.form'/> ">immunization</a>
+    </li
+</ul>
 <div class="row">
     <div class="jumbotron col-md-8 col-md-offset-2">
         <h2 class="text-center">Child Clinic Registration</h2>
-        <h3 class="text-center" style="text-decoration-color: #2aabd2">immunization registration</h3>
         <div class="form-group col-md-offset-2 col-md-8">
             <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/registerchild.form' />">
 
