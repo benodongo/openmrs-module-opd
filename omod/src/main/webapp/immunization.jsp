@@ -31,9 +31,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label>CWC NO.</label>
-                    <input type="number" class="form-control" name="cwc" value="" size="12" maxlength="8" required />
+                    <label>Father's Name</label>
+                    <input type="text" class="form-control" name="fathername" value="" size="12" maxlength="8" required />
                 </div>
+                <div class="form-group">
+                    <label>Mother's Name</label>
+                    <input type="text" class="form-control" name="mothername" value="" size="12" maxlength="8" required />
+                </div>
+
                 <div class="form-group">
                     <label>Date of Birth</label>
                     <input type="date" class="form-control" name="dateofbirth" value="" size="35" required />
@@ -64,19 +69,32 @@
                 </div>
 
                 <div class="form-group">
-                    <label>location/Village/Estate</label>
+                    <label>Country</label>
                     <input type="text" class="form-control" name="country" value="" size="10" maxlength="40" required />
                 </div>
 
-                <div class="form-group">
-                    <label>Weight in Kg</label>
-                    <input type="text" class="form-control" name="weight" value="" size="10" maxlength="40" required />
-                </div>
+
                 <div class="form-group">
                     <label>BCG</label>
                     <input type="dater" class="form-control" name="bcg" value="" size="12" maxlength="8" required />
                 </div>
+                <div class="row">
+                    <label>POLIO</label><br/>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" name="polio1" placeholder="polio 1" value="" size="30" required />
+                    </div>
 
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" name="polio2"  placeholder="polio 2" value="" size="25" required />
+                    </div>
+
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" name="polio3" placeholder="polio 3" value="" size="30" required />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" name="polio4" placeholder="polio 4" value="" size="30" required />
+                    </div>
+                </div>
                 <div class="form-group">
                     <label>Measles</label>
                     <input type="date" class="form-control" name="measles" value="" size="35" required />
