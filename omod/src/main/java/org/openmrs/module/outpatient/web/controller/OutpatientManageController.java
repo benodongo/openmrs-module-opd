@@ -33,6 +33,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.*;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -130,6 +131,40 @@ public class  OutpatientManageController {
             return "redirect:create.form";
 
         }
+
+    }
+    //list outpatients in search
+    @RequestMapping(value = "/module/outpatient/findPatient", method = RequestMethod.GET)
+    public void findPatient(ModelMap model) {
+        PatientService patientService=Context.getPatientService();
+        //InpatientService inpatientService=Context.getService(InpatientService.class);
+
+        List<Patient> patientList=patientService.getAllPatients();
+      //  List<Inpatient>inpatientList=inpatientService.getAllInpatient();
+        List<Patient>patients=new ArrayList<Patient>();
+
+        Boolean check=true;
+
+      /*  for(Patient patient:patientList)
+        {	check=true;
+
+            for(Inpatient inpatient:inpatientList)
+            {
+                if(patient==inpatient.getPatient())
+                {
+                    check=false;
+                    break;
+                }
+            }
+
+            if(check)
+            {
+                patients.add(patient);
+            }
+
+        }
+ */
+        model.addAttribute("patientList", patients);
 
     }
 }
