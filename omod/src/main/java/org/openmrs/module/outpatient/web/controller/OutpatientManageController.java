@@ -46,6 +46,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class  OutpatientManageController {
 	
 	protected final Log log = LogFactory.getLog(getClass());
+    //add  an outpatient
 
 //display the dashboard
     @RequestMapping(value = "/module/outpatient/manage", method = RequestMethod.GET)

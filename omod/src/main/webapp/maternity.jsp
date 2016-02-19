@@ -49,7 +49,33 @@
 					<input type="radio" name="maritalStatus" value="divorced"> Divorced<br>
 					<input type="radio" name="maritalStatus" value="single"> Single<br>
 					<input type="radio" name="maritalStatus" value="separated"> Separated<br>                    
-                </div>                   
+                </div> 
+
+                 <div class="form-group">
+                    <label>Village/Estate/Landmark</label>
+                    <input type="text" class="form-control" name="location" value="" size="20" required />
+                </div>  
+
+                <div class="form-group">
+                    <label>Parity</label>
+                    <input type="text" class="form-control" name="parity" value="" size="20" required />
+                </div> 
+
+                 <div class="form-group">
+                    <label>Gravida</label>
+                    <input type="text" class="form-control" name="gravida" value="" size="20" required />
+                </div>
+
+                 <div class="form-group">
+                    <label>Last Menstrual Period</label>
+                    <input type="date" class="form-control" name="lastMenstrualPeriod" value="" size="3" required />
+                </div>
+
+                <div class="form-group">
+                    <label>EStimated Date of Delivery</label>
+                    <input type="date" class="form-control" name="estimatedDelivery" value="" size="3" required />
+                </div>
+
 
 
                 
