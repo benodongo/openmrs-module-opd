@@ -40,5 +40,5 @@
 </ul>
 <h2>
 	<%--<spring:message code="outpatient.title" />--%>
-	OutPatient Details
+	Outpatient Clinic
 </h2>
