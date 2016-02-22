@@ -71,6 +71,12 @@ public class  OutpatientManageController {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
         model.addAttribute("patients", allPatients);
     }
+    //postnatal form
+    @RequestMapping(value = "/module/outpatient/postnatal", method = RequestMethod.GET)
+    public void postnatal(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
+    }
      //register patient(child)
     @RequestMapping(value = "/module/outpatient/registerchild.form", method=RequestMethod.POST)
     public String  registerpatient(ModelMap model, WebRequest webRequest, HttpSession httpSession,

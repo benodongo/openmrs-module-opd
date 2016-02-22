@@ -1,9 +1,12 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="template/localHeader.jsp"%>
+ <li class="first">
+        <a href="<c:url value='/module/outpatient/postnatal.form'/> "> Postnatal</a>
+    </li>
 <div class="row">
     <div class="jumbotron col-md-8 col-md-offset-2">
-        <h2 class="text-center">Maternal Health Registration</h2>
+        <h2 class="text-center">Maternal Health Care</h2>
         <h3 class="text-center" style="text-decoration-color: #2aabd2">Maternity Registration</h3>
         <div class="form-group col-md-offset-2 col-md-8">
             <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/registerchild.form' />">
@@ -74,9 +77,11 @@
                 <div class="form-group">
                     <label>EStimated Date of Delivery</label>
                     <input type="date" class="form-control" name="estimatedDelivery" value="" size="3" required />
-                </div>         
+                </div>  
 
-
+                <div class="form-group">
+                    <button type="button" class="btn btn-success">Register</button>
+                </div>
             </form>
         </div>
 
