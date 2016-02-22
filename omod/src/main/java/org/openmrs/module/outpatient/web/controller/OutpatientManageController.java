@@ -46,7 +46,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class  OutpatientManageController {
 	
 	protected final Log log = LogFactory.getLog(getClass());
-    //add  an outpatient
 
 //display the dashboard
     @RequestMapping(value = "/module/outpatient/manage", method = RequestMethod.GET)
@@ -65,19 +64,25 @@ public class  OutpatientManageController {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
         model.addAttribute("patients", allPatients);
     }
-    //maternity form
+    //maternal  form
     @RequestMapping(value = "/module/outpatient/maternity", method = RequestMethod.GET)
     public void maternity(ModelMap model) {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
         model.addAttribute("patients", allPatients);
     }
-    //postnatal form
+    //antenatal
+    @RequestMapping(value = "/module/outpatient/antenatal", method = RequestMethod.GET)
+    public void antenatal(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
+    }
+    //postnatal  form
     @RequestMapping(value = "/module/outpatient/postnatal", method = RequestMethod.GET)
     public void postnatal(ModelMap model) {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
         model.addAttribute("patients", allPatients);
     }
-     //register patient(child)
+    //register patient(child)
     @RequestMapping(value = "/module/outpatient/registerchild.form", method=RequestMethod.POST)
     public String  registerpatient(ModelMap model, WebRequest webRequest, HttpSession httpSession,
                                    @RequestParam(value = "givenName", required = true) String givenName,
@@ -152,6 +157,7 @@ public class  OutpatientManageController {
         }
 
     }
+
     //list outpatients in search
     @RequestMapping(value = "/module/outpatient/findPatient", method = RequestMethod.GET)
     public void findPatient(ModelMap model) {

@@ -7,7 +7,7 @@
     </li>
     <li class="first">
         <a href="<c:url value='/module/outpatient/immunization.form'/> ">immunization</a>
-    </li>
+    </li
 </ul>
 <div class="row">
     <div class="jumbotron col-md-8 col-md-offset-2">
@@ -116,9 +116,9 @@
                     <button type="button" class="btn btn-success">Register</button>
                 </div>
 
+
             </form>
         </div>
+
     </div>
-
-
-<%@ include file="/WEB-INF/template/footer.jsp"%>
+    <%@ include file="/WEB-INF/template/footer.jsp"%>

@@ -30,15 +30,10 @@
 				code="outpatient.manage" /></a>
 	</li>
 	<li
-
 			<c:if test='<%= request.getRequestURI().contains("/htmlFormEntry") %>'>class="active"</c:if>>
 		<a
 				href="${pageContext.request.contextPath}/module/outpatient/htmlFormEntry.form"><spring:message
 				code="html Forms" /></a>
-			<c:if test='<%= request.getRequestURI().contains("/summary") %>'>class="active"</c:if>>
-		<a
-				href="${pageContext.request.contextPath}/module/outpatient/summary.form"><spring:message
-				code="outpatient.summary" /></a>
 	</li>
 	
 	<!-- Add further links here -->
