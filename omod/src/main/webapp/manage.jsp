@@ -28,6 +28,12 @@
                 </a>
             </div>
             <div class="col-md-2">
+                <a style="text-decoration: none" href="<c:url value='/module/outpatient/maternity.form'/> ">
+                    <i class="fa fa-user-md fa-5x"></i><br>
+                    <span>Maternal Care</span>
+                </a>
+            </div>
+            <div class="col-md-2">
                 <a style="text-decoration: none" href="#">
                     <i class="fa fa-calendar fa-5x"></i><br>
                     <span>Appointments</span>
@@ -45,6 +51,7 @@
                     <i class="fa fa-medkit fa-5x"></i><br>
                     <span>Emergency</span>
                 </a>
+                <!---
             </div>
             <div class="col-md-2">
                 <a style="text-decoration: none" href="#">
@@ -53,13 +60,14 @@
                 </a>
             </div>
             <br/>
+
             <div class="col-md-2">
                 <a style="text-decoration: none" href="#">
                     <i class="fa fa-users fa-5x"></i><br>
                     <span>OutPatients List</span>
                 </a>
             </div>
-
+--->
         </div>
     </div>
 </div>
