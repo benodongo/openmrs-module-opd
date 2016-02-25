@@ -1,4 +1,20 @@
+/**
+ * The contents of this file are subject to the OpenMRS Public License
+ * Version 1.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://license.openmrs.org
+ *
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ */
 package org.openmrs.module.outpatient.web.controller;
+
+
+import org.springframework.ui.ModelMap;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collections;
@@ -28,32 +44,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
+
 /**
- * The controller for entering/viewing a form.
- * <p/>
- * Handles {@code htmlFormEntry.form} requests. Renders view {@code htmlFormEntry.jsp}.
- * <p/>
- * TODO: This has a bit too much logic in the onSubmit method. Move that into the FormEntrySession.
+ * The main controller.
  */
 @Controller
-public class HtmlFormEntryEmbedController {
+public class  htmlFormEmbeddController {
+
     protected final Log log = LogFactory.getLog(getClass());
-    //    public final static String closeDialogView = "/module/htmlformentry/closeDialog";
     public final static String FORM_IN_PROGRESS_KEY = "HTML_FORM_IN_PROGRESS_KEY";
     public final static String FORM_IN_PROGRESS_VALUE = "HTML_FORM_IN_PROGRESS_VALUE";
     public final static String FORM_PATH = "/module/outpatient/htmlFormEntry";
-    @RequestMapping(method=RequestMethod.GET, value=FORM_PATH)
-    public void showForm() {
-        // Intentionally blank. All work is done in the getFormEntrySession method
+
+
+    @RequestMapping(value = "/module/outpatient/htmlFormEntry", method = RequestMethod.GET)
+    public void manage(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
     }
+
     @ModelAttribute("command")
     public FormEntrySession getFormEntrySession(HttpServletRequest request,
                                                 // @RequestParam doesn't pick up query parameters (in the url) in a POST, so I'm handling encounterId, modeParam, and which specially
-                                                /*@RequestParam(value="mode", required=false) String modeParam,*/
-                                                /*@RequestParam(value="encounterId", required=false) Integer encounterId,*/
-                                                /*@RequestParam(value="which", required=false) String which,*/
+	                                                /*@RequestParam(value="mode", required=false) String modeParam,*/
+	                                                /*@RequestParam(value="encounterId", required=false) Integer encounterId,*/
+	                                                /*@RequestParam(value="which", required=false) String which,*/
                                                 @RequestParam(value="patientId", required=false) Integer patientId,
-                                                /*@RequestParam(value="personId", required=false) Integer personId,*/
+	                                                /*@RequestParam(value="personId", required=false) Integer personId,*/
                                                 @RequestParam(value="formId", required=false) Integer formId,
                                                 @RequestParam(value="htmlformId", required=false) Integer htmlFormId,
                                                 @RequestParam(value="returnUrl", required=false) String returnUrl,
@@ -65,11 +82,11 @@ public class HtmlFormEntryEmbedController {
         Integer personId = null;
         patientId   = 2;
         formId = 3; // <-----------------------this is where you need to mention the FORM ID or HTML Form id in below variable
-        htmlFormId = 1; //<--------------------|
+        htmlFormId = 2; //<--------------------|
         //Integer.parseInt(request.getParameter("formId"));
-//        if (StringUtils.hasText(request.getParameter("personId"))) {
-//            personId = Integer.valueOf(request.getParameter("personId"));
-//        }
+//	        if (StringUtils.hasText(request.getParameter("personId"))) {
+//	            personId = Integer.valueOf(request.getParameter("personId"));
+//	        }
         String modeParam = request.getParameter("mode");
         if ("enter".equalsIgnoreCase(modeParam)) {
             mode = Mode.ENTER;
@@ -199,7 +216,7 @@ public class HtmlFormEntryEmbedController {
             if (successView == null)
                 successView = request.getContextPath() + "/patientDashboard.form" + getQueryPrameters(request, session);
             if (StringUtils.hasText(request.getParameter("closeAfterSubmission"))) {
-//                return new ModelAndView(closeDialogView, "dialogToClose", request.getParameter("closeAfterSubmission"));
+//	                return new ModelAndView(closeDialogView, "dialogToClose", request.getParameter("closeAfterSubmission"));
             } else {
                 return new ModelAndView(new RedirectView(successView));
             }
