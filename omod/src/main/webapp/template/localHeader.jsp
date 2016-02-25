@@ -24,16 +24,20 @@
 				code="admin.title.short" /></a></li>
 
 	<li
-		<c:if test='<%= request.getRequestURI().contains("/manage") %>'>class="active"</c:if>>
+		<c:if test='<%= request.getRequestURI().contains("outpatientClinic") %>'>class="active"</c:if>>
 		<a
 		href="${pageContext.request.contextPath}/module/outpatient/manage.form"><spring:message
 				code="outpatient.manage" /></a>
 	</li>
-	<li
-			<c:if test='<%= request.getRequestURI().contains("/htmlFormEntry") %>'>class="active"</c:if>>
-		<a
-				href="${pageContext.request.contextPath}/module/outpatient/htmlFormEntry.form"><spring:message
-				code="html Forms" /></a>
+	<li <c:if test='<%= request.getRequestURI().contains("htmlForms") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/htmlformentry/htmlForms.list">
+			<spring:message code="htmlformentry.manage"/>
+		</a>
+	</li>
+	<li <c:if test='<%= request.getRequestURI().contains("htmlFormFromFile") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/htmlformentry/htmlFormFromFile.form">
+			<spring:message code="htmlformentry.preview"/>
+		</a>
 	</li>
 	
 	<!-- Add further links here -->
