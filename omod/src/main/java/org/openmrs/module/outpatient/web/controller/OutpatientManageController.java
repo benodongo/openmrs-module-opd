@@ -58,6 +58,11 @@ public class  OutpatientManageController {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
         model.addAttribute("patients", allPatients);
     }
+    //display adding patient form
+    @RequestMapping(method = RequestMethod.GET)
+    public String showThePage() {
+        return "module/outpatient/newPatient";
+    }
     //immunization  form
     @RequestMapping(value = "/module/outpatient/immunization", method = RequestMethod.GET)
     public void immunization(ModelMap model) {

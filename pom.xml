@@ -112,6 +112,23 @@
 				<type>pom</type>
 				<scope>provided</scope>
 			</dependency>
+			<!---rest module-->
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>webservices.rest-omod</artifactId>
+				<version>2.12</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>webservices.rest-omod-common</artifactId>
+				<version>2.12</version>
+				<classifier>tests</classifier>
+				<scope>test</scope>
+			</dependency>
+			<!--end of RREST module-->
 			<!--Ends htmlformentry module-->
 
 		</dependencies>
