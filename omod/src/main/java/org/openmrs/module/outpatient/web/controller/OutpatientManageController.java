@@ -142,7 +142,7 @@ public class  OutpatientManageController {
 
     //Save immunization  Form
     @RequestMapping(value = "/module/outpatient/saveImmunization.form", method = RequestMethod.POST)
-    public String saveAdmission(ModelMap model,HttpSession httpSession,WebRequest webRequest,
+    public String saveImmunization(ModelMap model,HttpSession httpSession,WebRequest webRequest,
                                 @RequestParam(value = "opd_id", required = true)Integer patientId,
                                 @RequestParam(value = "polio1_date", required = true)Date polio1Date,
                                 @RequestParam(value = "polio2_date", required = true)Date polio2Date,
@@ -157,12 +157,6 @@ public class  OutpatientManageController {
             Outpatient outpatient=outpatientService.getOutpatient(patientId);
             Patient patient=outpatient.getPatient();
 
-            //check if patient is alive
-            if(patient.getDead())
-            {
-               // httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Patient is Dead");
-               // return "redirect:listInpatient.form";
-            }
             Immunization immunization=new Immunization();
             immunization.setPolio1Date(polio1Date);
             immunization.setPolio2Date(polio2Date);
@@ -189,7 +183,7 @@ public class  OutpatientManageController {
 
     }
     @RequestMapping(value = "/module/outpatient/saveMaternal.form", method = RequestMethod.POST)
-    public String saveAdmission(ModelMap model,HttpSession httpSession,WebRequest webRequest,
+    public String saveMaternal(ModelMap model,HttpSession httpSession,WebRequest webRequest,
                                 @RequestParam(value = "opd_id", required = true)Integer patientId,
                                 @RequestParam(value= "anc_visits",required= true)String ancVisits,
                                 @RequestParam(value="marital_status", required=true)Integer maritalStatus,
@@ -205,12 +199,6 @@ public class  OutpatientManageController {
             Outpatient outpatient=outpatientService.getOutpatient(patientId);
             Patient patient=outpatient.getPatient();
 
-            //check if patient is alive
-            if(patient.getDead())
-            {
-                // httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Patient is Dead");
-                // return "redirect:listInpatient.form";
-            }
             Maternal maternal=new Maternal();
             maternal.setAncVisits(ancVisits);
             maternal.setMaritalStatus(maritalStatus);
