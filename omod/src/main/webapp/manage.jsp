@@ -16,7 +16,7 @@
             </div>
 
             <div class="col-md-2">
-                <a style="text-decoration: none" href="<c:url value='/module/outpatient/newPatient.form'/>">
+                <a style="text-decoration: none" href="<c:url value='/findPatient.htm'/>">
                     <i class="fa fa-user-plus fa-5x"></i><br>
                     <span>Add Patient</span>
                 </a>
@@ -42,7 +42,7 @@
             <div class="col-md-2">
                 <a style="text-decoration: none" href="<c:url value='/module/outpatient/htmlFormEntry.form'/> ">
                     <i class="fa fa-calendar fa-5x"></i><br>
-                    <span>Active Visits</span>
+                    <span>Html Forms</span>
                 </a>
             </div>
 

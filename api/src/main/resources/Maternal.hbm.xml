@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.outpatient">
+
+    <class name="Maternal" table="${project.parent.artifactId}_maternal">
+        <id name="maternalId" type="java.lang.Integer" column="maternal_id">
+            <generator class="native">
+            </generator>
+        </id>
+        <discriminator column="maternal_id" insert="false"/>
+
+        <many-to-one name="outpatient" class="Outpatient" fetch="select">
+            <column name="opd_id" not-null="true" />
+        </many-to-one>
+
+        <property name="ancVisits" type="java.lang.String" column="anc_visits"/>
+        <property name="maritalStatus" type="java.lang.Integer" column="marital_status"/>
+        <property name="parity" type="java.lang.String" column="parity"/>
+        <property name="gravida" type="java.lang.String" column="gravida"/>
+        <property name="lastMenstrual" type="java.util.Date" column="last_menstrual"/>
+        <property name="estimatedDelivery" type="java.util.Date" column="estimated_delivery"/>
+        <property name="createdBy" type="java.lang.String" column="created_by" />
+        <property name="dateCreated" type="java.util.Date" column="date_created" />
+        <property name="changedBy" type="java.lang.String" column="changed_by" />
+        <property name="dateChanged" type="java.util.Date" column="date_changed" />
+
+        <property name="uuid" type="java.lang.String" column="uuid"
+                  length="38" unique="true" />
+        <!-- Associations-->
+
+
+
+
+    </class>
+
+</hibernate-mapping>
