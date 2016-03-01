@@ -51,7 +51,7 @@
         </createTable>
     </changeSet>
      <!--DB for maternal -->
-    <changeSet id="003" author="benson">
+    <changeSet id="004" author="benson">
         <comment>create the maternal Table</comment>
         <createTable tableName="outpatient_maternal">
             <column name="maternal_id" autoIncrement="true" type="int">
@@ -59,9 +59,9 @@
             </column>
             <column name="opd_id" type="int"></column>
             <column name="anc_visits" type="varchar(50)"/>
-            <column name="marital_status" type="int"/>
+            <column name="marital_status" type="varchar(50)"/>
             <column name="parity" type="varchar(50)"/>
-            <column name="gravida" type="int"/>
+            <column name="gravida" type="varchar(50)"/>
             <column name="last_menstrual" type="DATETIME"/>
             <column name="estimated_delivery" type="DATETIME"/>
             <column name="created_by" type="varchar(50)"/>
@@ -71,5 +71,118 @@
             <column name="uuid" type="char(38)" />
 
         </createTable>
+    </changeSet>
+    <!--DB for Hiv cre -->
+    <changeSet id="007" author="benson">
+        <comment>create the hiv table</comment>
+        <createTable tableName="outpatient_hiv">
+            <column name="hiv_id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="opd_id" type="int"></column>
+            <column name="admission_date" type="DATETIME"/>
+            <column name="serial_counter" type="int"/>
+            <column name="art_date" type="DATETIME"/>
+            <column name="eligibility_reason" type="varchar(100)"/>
+            <column name="clinical_stage" type="varchar(50)"/>
+            <column name="cd4_value" type="varchar(50)"/>
+            <column name="height" type="varchar(50)"/>
+            <column name="weight" type="varchar(50)"/>
+            <column name="ctx_date" type="DATETIME"/>
+            <column name="tb_date" type="DATETIME"/>
+            <column name="tb_reg" type="varchar(50)"/>
+            <column name="original_regime" type="varchar(50)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="date_created" type="DATETIME" />
+            <column name="changed_by" type="varchar(50)"/>
+            <column name="date_changed" type="DATETIME"  />
+            <column name="uuid" type="char(38)" />
+
+        </createTable>
+    </changeSet>
+    <!--Encounter table-->
+    <changeSet id="10" author="ben" >
+        <comment>Create the outpatient encounters table</comment>
+        <createTable tableName="outpatient_encounter">
+
+            <column name="outpatient_encounter_id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="immunization_id" type="int" />
+            <column name="maternal_id" type="int" />
+            <column name="hiv_id" type="int" />
+        </createTable>
+    </changeSet>
+
+    <!-- Foreign key mappings -->
+    <changeSet id="12" author="benson">
+        <comment>addForeignKeyConstraint outpatient outpatient1</comment>
+        <addForeignKeyConstraint baseColumnNames="outpatient_id"
+                                 baseTableName="outpatient_outpatient1"
+                                 constraintName="fk_outpatient_patient"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="patient_id"
+                                 referencedTableName="patient" />
+    </changeSet>
+    <changeSet id="13" author="benson">
+        <comment>addForeignKeyConstraint outpatient immunization</comment>
+        <addForeignKeyConstraint baseColumnNames="opd_id"
+                                 baseTableName="outpatient_immunization"
+                                 constraintName="fk_outpatient_immunization"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="outpatient_id"
+                                 referencedTableName="outpatient_outpatient1" />
+    </changeSet>
+    <changeSet id="18" author="benson">
+        <comment>addForeignKeyConstraint outpatient maternal</comment>
+        <addForeignKeyConstraint baseColumnNames="opd_id"
+                                 baseTableName="outpatient_maternal"
+                                 constraintName="fk_outpatient_maternal"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="outpatient_id"
+                                 referencedTableName="outpatient_outpatient1" />
+    </changeSet>
+    <changeSet id="20" author="benson">
+        <comment>addForeignKeyConstraint outpatient hiv</comment>
+        <addForeignKeyConstraint baseColumnNames="opd_id"
+                                 baseTableName="outpatient_hiv"
+                                 constraintName="fk_outpatient_hiv"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="outpatient_id"
+                                 referencedTableName="outpatient_outpatient1" />
+    </changeSet>
+    <changeSet id="15" author="benson">
+        <comment>addForeignKeyConstraint immunization encounter</comment>
+        <addForeignKeyConstraint baseColumnNames="immunization_id"
+                                 baseTableName="outpatient_encounter"
+                                 constraintName="fk_immunization_encounter"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="immunization_id"
+                                 referencedTableName="outpatient_immunization" />
+    </changeSet>
+    <changeSet id="16" author="benson">
+        <comment>addForeignKeyConstraint maternal encounter</comment>
+        <addForeignKeyConstraint baseColumnNames="maternal_id"
+                                 baseTableName="outpatient_encounter"
+                                 constraintName="fk_maternal_encounter"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="maternal_id"
+                                 referencedTableName="outpatient_maternal" />
+    </changeSet>
+    <changeSet id="17" author="benson">
+        <comment>addForeignKeyConstraint hiv encounter</comment>
+        <addForeignKeyConstraint baseColumnNames="hiv_id"
+                                 baseTableName="outpatient_encounter"
+                                 constraintName="fk_hiv_encounter"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="hiv_id"
+                                 referencedTableName="outpatient_hiv" />
     </changeSet>
 </databaseChangeLog>

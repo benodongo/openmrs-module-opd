@@ -37,6 +37,7 @@ public class Outpatient extends BaseOpenmrsObject implements Serializable {
     private Patient patient;
     private Set<Immunization> immunizations;
     private Set<Maternal> maternals;
+    private Set<Hiv>hivs;
 
     //change and creation meta-data
     private String  createdBy;
@@ -87,6 +88,14 @@ public class Outpatient extends BaseOpenmrsObject implements Serializable {
 
     public void setMaternals(Set<Maternal> maternals) {
         this.maternals = maternals;
+    }
+
+    public Set<Hiv> getHivs() {
+        return hivs;
+    }
+
+    public void setHivs(Set<Hiv> hivs) {
+        this.hivs = hivs;
     }
 
     public String getCreatedBy() {

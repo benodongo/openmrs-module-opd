@@ -51,6 +51,7 @@ public class Immunization extends BaseOpenmrsObject implements Serializable {
 
 
     //Mapping
+    private Set<OutpatientEncounter>encounters;
 
     private Outpatient outpatient;
 
@@ -153,6 +154,14 @@ public class Immunization extends BaseOpenmrsObject implements Serializable {
     }
     //Mappings Getters and Setters
 
+
+    public Set<OutpatientEncounter> getEncounters() {
+        return encounters;
+    }
+
+    public void setEncounters(Set<OutpatientEncounter> encounters) {
+        this.encounters = encounters;
+    }
 
     public Outpatient getOutpatient() {
         return outpatient;

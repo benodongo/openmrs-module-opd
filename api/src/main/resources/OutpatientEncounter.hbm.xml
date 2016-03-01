@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.openmrs.module.outpatient">
+    <joined-subclass name="OutpatientEncounter" table="outpatient_encounter" extends="org.openmrs.Encounter">
+
+        <key column="outpatient_encounter_id" not-null="true" on-delete="cascade" />
+
+        <property name="outpatientEncounterId" type="int" not-null="true"
+                  column="outpatient_encounter_id" update="false" insert="false" />
+
+        <many-to-one name="immunization" class="Immunization" fetch="select">
+            <column name="immunization_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="maternal" class="Maternal" fetch="select">
+            <column name="maternal_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="hiv" class="Hiv" fetch="select">
+            <column name="hiv_id" not-null="true" />
+        </many-to-one>
+
+
+    </joined-subclass>
+
+</hibernate-mapping>

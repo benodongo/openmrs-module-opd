@@ -30,7 +30,7 @@ public class Maternal extends BaseOpenmrsObject implements Serializable {
     private Integer id;
     private Integer maternalId;
     private String ancVisits;
-    private Integer maritalStatus;
+    private String maritalStatus;
     private String parity;
     private String gravida;
     private Date lastMenstrual;
@@ -47,6 +47,7 @@ public class Maternal extends BaseOpenmrsObject implements Serializable {
 
 
     //Mapping
+    private Set<OutpatientEncounter>encounters;
 
     private Outpatient outpatient;
 
@@ -69,11 +70,11 @@ public class Maternal extends BaseOpenmrsObject implements Serializable {
         this.ancVisits = ancVisits;
     }
 
-    public Integer getMaritalStatus() {
+    public String getMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(Integer maritalStatus) {
+    public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
@@ -139,6 +140,14 @@ public class Maternal extends BaseOpenmrsObject implements Serializable {
 
     public void setDateChanged(Date dateChanged) {
         this.dateChanged = dateChanged;
+    }
+
+    public Set<OutpatientEncounter> getEncounters() {
+        return encounters;
+    }
+
+    public void setEncounters(Set<OutpatientEncounter> encounters) {
+        this.encounters = encounters;
     }
 
     public Outpatient getOutpatient() {
