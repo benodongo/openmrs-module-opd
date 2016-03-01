@@ -18,6 +18,9 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.*;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.PersonService;
+import org.openmrs.module.outpatient.api.OutpatientService;
+import org.openmrs.module.outpatient.api.ImmunizationService;
+import org.openmrs.module.outpatient.api.MaternalService;
 import org.openmrs.api.context.Context;
 import org.openmrs.validator.PatientIdentifierValidator;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import  org.openmrs.module.outpatient.*;
+
+
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -52,20 +58,176 @@ public class  OutpatientManageController {
     public void manage(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
     }
+    //list outpatients in search
+    @RequestMapping(value = "/module/outpatient/findPatient", method = RequestMethod.GET)
+    public void findPatient(ModelMap model) {
+        PatientService patientService=Context.getPatientService();
+        OutpatientService outpatientService=Context.getService(OutpatientService.class);
+
+        List<Patient> patientList=patientService.getAllPatients();
+        List<Outpatient>outpatientList=outpatientService.getAllOutpatient();
+        List<Patient>patients=new ArrayList<Patient>();
+
+        Boolean check=true;
+
+        for(Patient patient:patientList)
+        {	check=true;
+
+            for(Outpatient outpatient:outpatientList)
+            {
+                if(patient==outpatient.getPatient())
+                {
+                    check=false;
+                    break;
+                }
+            }
+
+            if(check)
+            {
+                patients.add(patient);
+            }
+
+        }
+
+        model.addAttribute("patientList", patients);
+
+    }
+    //listing outpatients
+    @RequestMapping(value = "/module/outpatient/outpatient.form", method = RequestMethod.GET)
+    public void outpatientForm(ModelMap model, @RequestParam(value ="id", required = true)Integer patientId) {
+
+        model.addAttribute("patientId", patientId);
+
+    }
+
+    //Save outpatient
+    @RequestMapping(value = "/module/outpatient/saveOutpatient.form", method = RequestMethod.POST)
+    public String saveOutpatient(ModelMap model,WebRequest request, HttpSession httpSession,
+                                 @RequestParam(required = true, value = "outpatient_id") Integer patientId,
+                                 @RequestParam(required = true, value = "opd_id") String opdId)
+    {
+        OutpatientService outpatientService=Context.getService(OutpatientService.class);
+
+
+        try{
+
+            Outpatient outpatient=new Outpatient();
+            PatientService patientService=Context.getPatientService();
+            Patient patient=patientService.getPatient(patientId);
+
+            outpatient.setOutPatientId(patientId);
+            outpatient.setOpdId(opdId);
+            outpatient.setPatient(patient);
+            //save outpatient
+            outpatientService.saveOutpatient(outpatient);
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added outpatient details Successfully");
+
+        }
+        catch (Exception ex)
+        {
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Error adding Inpatient");
+            return "redirect:outpatient.form?id="+patientId;
+        }
+
+        return "redirect:processRequest.form?id="+patientId;
+
+    }
+
+    //Display Immunization Form
+    @RequestMapping(value = "/module/outpatient/immunization.form", method = RequestMethod.GET)
+    public void admissionForm(ModelMap model,
+                              @RequestParam(value = "id", required = true)String opdId) {
+        model.addAttribute("opdId", opdId);
+    }
+
+    //Save immunization  Form
+    @RequestMapping(value = "/module/outpatient/saveImmunization.form", method = RequestMethod.POST)
+    public String saveImmunization(ModelMap model,HttpSession httpSession,WebRequest webRequest,
+                                @RequestParam(value = "opd_id", required = true)Integer patientId,
+                                @RequestParam(value = "polio1_date", required = true)Date polio1Date,
+                                @RequestParam(value = "polio2_date", required = true)Date polio2Date,
+                                @RequestParam(value = "polio3_date", required = true)Date polio3Date,
+                                @RequestParam(value = "measles_date", required = true)Date measlesDate,
+                                @RequestParam(value = "yellow_fever_date", required = true)Date yelloFeverDate,
+                                @RequestParam(value="pcv", required= true)Date pcv){
+
+        ImmunizationService immunizationService=Context.getService(ImmunizationService.class);
+        OutpatientService outpatientService=Context.getService(OutpatientService.class);
+        try{
+            Outpatient outpatient=outpatientService.getOutpatient(patientId);
+            Patient patient=outpatient.getPatient();
+
+            Immunization immunization=new Immunization();
+            immunization.setPolio1Date(polio1Date);
+            immunization.setPolio2Date(polio2Date);
+            immunization.setPolio3Date(polio3Date);
+            immunization.setMeaslesDate(measlesDate);
+            immunization.setYellowFeverDate(yelloFeverDate);
+            immunization.setPcv(pcv);
+            immunization.setChangedBy(Context.getAuthenticatedUser().toString());
+            immunization.setDateCreated(new Date());
+
+            //save immunization
+            immunizationService.saveImmunization(immunization);
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Records added  details Successfully");
+        }
+        catch (Exception ex)
+        {
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Failed to save immunization details");
+            return "redirect:processRequest.form?id="+patientId;
+
+        }
+
+
+        return "redirect:processRequest.form?id="+patientId;
+
+    }
+    @RequestMapping(value = "/module/outpatient/saveMaternal.form", method = RequestMethod.POST)
+    public String saveMaternal(ModelMap model,HttpSession httpSession,WebRequest webRequest,
+                                @RequestParam(value = "opd_id", required = true)Integer patientId,
+                                @RequestParam(value= "anc_visits",required= true)String ancVisits,
+                                @RequestParam(value="marital_status", required=true)Integer maritalStatus,
+                                @RequestParam(value="parity", required=true)String parity,
+                                @RequestParam(value="gravida", required=true) String gravida,
+                                @RequestParam(value="last_menstrual" ,required=true) Date lastMenstrual,
+                                @RequestParam(value="estimated_delivery", required=true)Date estimatedDelivery
+                                ){
+
+        MaternalService maternalService=Context.getService(MaternalService.class);
+        OutpatientService outpatientService=Context.getService(OutpatientService.class);
+        try{
+            Outpatient outpatient=outpatientService.getOutpatient(patientId);
+            Patient patient=outpatient.getPatient();
+
+            Maternal maternal=new Maternal();
+            maternal.setAncVisits(ancVisits);
+            maternal.setMaritalStatus(maritalStatus);
+            maternal.setParity(parity);
+            maternal.setGravida(gravida);
+            maternal.setLastMenstrual(lastMenstrual);
+            maternal.setEstimatedDelivery(estimatedDelivery);
+            maternal.setChangedBy(Context.getAuthenticatedUser().toString());
+            maternal.setDateCreated(new Date());
+            //save maternal
+            maternalService.saveMaternal(maternal);
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added maternal details Successfully");
+        }
+        catch (Exception ex)
+        {
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Failed to save maternal details");
+            return "redirect:processRequest.form?id="+patientId;
+
+        }
+
+
+        return "redirect:processRequest.form?id="+patientId;
+
+    }
+
+
     //create patient form
     @RequestMapping(value = "/module/outpatient/create", method = RequestMethod.GET)
     public void create(ModelMap model) {
-        List<Patient> allPatients = Context.getPatientService().getAllPatients();
-        model.addAttribute("patients", allPatients);
-    }
-    //display adding patient form
-    @RequestMapping(method = RequestMethod.GET)
-    public String showThePage() {
-        return "module/outpatient/newPatient";
-    }
-    //immunization  form
-    @RequestMapping(value = "/module/outpatient/immunization", method = RequestMethod.GET)
-    public void immunization(ModelMap model) {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
         model.addAttribute("patients", allPatients);
     }
@@ -87,114 +249,7 @@ public class  OutpatientManageController {
         List<Patient> allPatients = Context.getPatientService().getAllPatients();
         model.addAttribute("patients", allPatients);
     }
-    //register patient(child)
-    @RequestMapping(value = "/module/outpatient/registerchild.form", method=RequestMethod.POST)
-    public String  registerpatient(ModelMap model, WebRequest webRequest, HttpSession httpSession,
-                                   @RequestParam(value = "givenName", required = true) String givenName,
-                                   @RequestParam(value = "familyName", required = true) String familyName,
-                                   @RequestParam(value = "middleName", required = false) String middleName,
-                                   @RequestParam(value = "dateofbirth", required = true) String dateofbirth,
-                                   @RequestParam(value = "gender", required = true) String gender,
-                                   @RequestParam(value = "nationalId", required = true) String nationalId,
-                                   @RequestParam(value = "address",required = false) String address,
-                                   @RequestParam(value = "city", required = true) String city,
-                                   @RequestParam(value = "postalcode", required = false) String postalcode,
-                                   @RequestParam(value = "country", required = true) String country
-    )
-    {
-        try {
-            //creating the services
-            PatientService patientService=Context.getPatientService();
-            PersonService personService=Context.getPersonService();
-
-            Patient patient=new Patient();
-            PersonName personName = new PersonName();
-
-            //adding the names
-            personName.setGivenName(givenName);
-            personName.setFamilyName(familyName);
-            personName.setMiddleName(middleName);
-
-            patient.addName(personName);
-
-            patient.setGender(gender);
-           // ConvertStringToDate convertStringToDate=new ConvertStringToDate();
-           // Date birthdate=dateofbirth;
-            //patient.setBirthdate(dateofbirth);
-
-            //Address and location
-            PersonAddress personAddress=new PersonAddress();
-            personAddress.setAddress1(address);
-            personAddress.setCityVillage(city);
-            personAddress.setPostalCode(postalcode);
-            personAddress.setCountry(country);
-            patient.addAddress(personAddress);
-
-            //create a patient Identifer
-            PatientIdentifier openmrsId = new PatientIdentifier();
-
-//            String TARGET_ID_KEY = "patientmodule.idType";
-//            String TARGET_ID = Context.getAdministrationService().getGlobalProperty(TARGET_ID_KEY);
-
-            PatientIdentifierType patientIdentifierType = patientService.getPatientIdentifierTypeByUuid("8d79403a-c2cc-11de-8d13-0010c6dffd0f");
-
-            openmrsId.setIdentifier(nationalId);
-            openmrsId.setDateCreated(new Date());
-            openmrsId.setLocation(Context.getLocationService().getDefaultLocation());
-            openmrsId.setIdentifierType(patientIdentifierType);
 
 
-            PatientIdentifierValidator.validateIdentifier(openmrsId);
-            patient.addIdentifier(openmrsId);
-            //saving the patient
-            if (!patientService.isIdentifierInUseByAnotherPatient(openmrsId)) {
-                patientService.savePatient(patient);
-            }
 
-            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Registered Successfully");
-            return "redirect:create.form";
-        }
-        catch (Exception ex)
-        {
-            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Registration failed-Patient Id taken");
-            return "redirect:create.form";
-
-        }
-
-    }
-
-    //list outpatients in search
-    @RequestMapping(value = "/module/outpatient/findPatient", method = RequestMethod.GET)
-    public void findPatient(ModelMap model) {
-        PatientService patientService=Context.getPatientService();
-        //InpatientService inpatientService=Context.getService(InpatientService.class);
-
-        List<Patient> patientList=patientService.getAllPatients();
-      //  List<Inpatient>inpatientList=inpatientService.getAllInpatient();
-        List<Patient>patients=new ArrayList<Patient>();
-
-        Boolean check=true;
-
-      /*  for(Patient patient:patientList)
-        {	check=true;
-
-            for(Inpatient inpatient:inpatientList)
-            {
-                if(patient==inpatient.getPatient())
-                {
-                    check=false;
-                    break;
-                }
-            }
-
-            if(check)
-            {
-                patients.add(patient);
-            }
-
-        }
- */
-        model.addAttribute("patientList", patients);
-
-    }
 }

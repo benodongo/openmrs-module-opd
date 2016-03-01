@@ -1,12 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
- 
+
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
     <!--
         See http://www.liquibase.org/manual/home#available_database_refactorings
         for a list of supported elements and attributes
     -->
-    
+
+    <changeSet author="benson" id="001">
+        <comment>Create the outpatient immunization table</comment>
+        <createTable tableName="outpatient_outpatient1">
+            <column  name="outpatient_id" type="int">
+                <constraints nullable="false" unique="true"  />
+            </column>
+
+            <column name="opd_id" type="varchar(50)" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="date_created" type="DATETIME" />
+            <column name="changed_by" type="varchar(50)"/>
+            <column name="date_changed" type="DATETIME"  />
+
+            <column name="uuid" type="char(38)" />
+        </createTable>
+
+    </changeSet>
+    <changeSet id="002" author="benson">
+        <comment>create the immunization table</comment>
+        <createTable tableName="outpatient_immunization">
+            <column name="immunization_id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="opd_id" type="int"></column>
+            <column name="bcg_date" type="DATETIME"/>
+            <column name="polio1_date" type="DATETIME"/>
+            <column name="polio2_date" type="DATETIME"/>
+            <column name="polio3_date" type="DATETIME"/>
+            <column name="measles_date" type="DATETIME"/>
+            <column name="yellow_fever_date" type="DATETIME"/>
+            <column name="pcv" type="DATETIME"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="date_created" type="DATETIME" />
+            <column name="changed_by" type="varchar(50)"/>
+            <column name="date_changed" type="DATETIME"  />
+            <column name="uuid" type="char(38)" />
+
+        </createTable>
+    </changeSet>
+     <!--DB for maternal -->
+    <changeSet id="003" author="benson">
+        <comment>create the maternal Table</comment>
+        <createTable tableName="outpatient_maternal">
+            <column name="maternal_id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="opd_id" type="int"></column>
+            <column name="anc_visits" type="varchar(50)"/>
+            <column name="marital_status" type="int"/>
+            <column name="parity" type="varchar(50)"/>
+            <column name="gravida" type="int"/>
+            <column name="last_menstrual" type="DATETIME"/>
+            <column name="estimated_delivery" type="DATETIME"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="date_created" type="DATETIME" />
+            <column name="changed_by" type="varchar(50)"/>
+            <column name="date_changed" type="DATETIME"  />
+            <column name="uuid" type="char(38)" />
+
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

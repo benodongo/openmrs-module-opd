@@ -32,6 +32,8 @@
 	<mappingFiles>
 				
 		Outpatient.hbm.xml
+		Immunization.hbm.xml
+		Maternal.hbm.xml
 				
 	</mappingFiles>
 

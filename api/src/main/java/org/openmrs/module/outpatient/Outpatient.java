@@ -16,6 +16,12 @@ package org.openmrs.module.outpatient;
 import java.io.Serializable;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.BaseOpenmrsMetadata;
+import org.openmrs.Patient;
+import org.openmrs.PatientIdentifier;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * It is a model class. It should extend either {@link BaseOpenmrsObject} or {@link BaseOpenmrsMetadata}.
@@ -25,16 +31,104 @@ public class Outpatient extends BaseOpenmrsObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private Integer outPatientId;
-	
+    private Integer outPatientId;
+
+    private String opdId;
+    private Patient patient;
+    private Set<Immunization> immunizations;
+    private Set<Maternal> maternals;
+
+    //change and creation meta-data
+    private String  createdBy;
+
+    private Date dateCreated;
+
+    private String changedBy;
+
+    private Date dateChanged;
+
+    //Setters and Getters
+    public Integer getOutPatientId() {
+        return outPatientId;
+    }
+
+    public void setOutPatientId(Integer outPatientId) {
+        this.outPatientId = outPatientId;
+    }
+    public String getOpdId(){
+        return opdId;
+    }
+
+    public void setOpdId(String opdId) {
+        this.opdId = opdId;
+    }
+    //patient
+
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Set<Immunization> getImmunizations() {
+        return immunizations;
+    }
+
+    public void setImmunizations(Set<Immunization> immunizations) {
+        this.immunizations = immunizations;
+    }
+
+    public Set<Maternal> getMaternals() {
+        return maternals;
+    }
+
+    public void setMaternals(Set<Maternal> maternals) {
+        this.maternals = maternals;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getChangedBy() {
+        return changedBy;
+    }
+
+    public void setChangedBy(String changedBy) {
+        this.changedBy = changedBy;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getDateChanged() {
+        return dateChanged;
+    }
+
+    public void setDateChanged(Date dateChanged) {
+        this.dateChanged = dateChanged;
+    }
+
 	@Override
 	public Integer getId() {
-		return id;
+		return getOutPatientId();
 	}
 	
 	@Override
 	public void setId(Integer id) {
-		this.id = id;
+		setOutPatientId(id);
 	}
 	
 }

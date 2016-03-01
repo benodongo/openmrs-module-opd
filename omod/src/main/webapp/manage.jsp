@@ -2,11 +2,14 @@
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
 <%@ include file="template/localHeader.jsp"%>
-<%@ include file="template/localHeader.jsp"%>
 
+<openmrs:htmlInclude file="/moduleResources/outpatient/img/search.gif" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/img/hiv.jpg" />
+
+<link rel="stylesheet" type="text/css" href="manage.css">
 <div class="panel panel-default">
     <div class="panel-heading">
-        <i class="fa fa-spinner fa-spin"></i>&nbsp;Dashboard
+        <i class="fa fa-spinner fa-spin"></i>&nbsp;Dashboard 
     </div>
     <div class="panel-body">
         <div class="row">
@@ -18,7 +21,7 @@
             </div>
 
             <div class="col-md-2">
-                <a style="text-decoration: none" href="<c:url value='/module/outpatient/newPatient.form'/>">
+                <a style="text-decoration: none" href="<c:url value='/findPatient.htm'/>">
                     <i class="fa fa-user-plus fa-5x"></i><br>
                     <span>Add Patient</span>
                 </a>
@@ -44,7 +47,7 @@
             <div class="col-md-2">
                 <a style="text-decoration: none" href="<c:url value='/module/outpatient/htmlFormEntry.form'/> ">
                     <i class="fa fa-calendar fa-5x"></i><br>
-                    <span>Active Visits</span>
+                    <span>Html Forms</span>
                 </a>
             </div>
 
@@ -53,27 +56,11 @@
                     <i class="fa fa-medkit fa-5x"></i><br>
                     <span>Emergency</span>
                 </a>
-                <!---
+                
             </div>
-            <div class="col-md-2">
-                <a style="text-decoration: none" href="#">
-                    <i class="fa fa-ambulance fa-5x"></i><br>
-                    <span>Ambulance</span>
-                </a>
-            </div>
-            <br/>
-
-            <div class="col-md-2">
-                <a style="text-decoration: none" href="#">
-                    <i class="fa fa-users fa-5x"></i><br>
-                    <span>OutPatients List</span>
-                </a>
-            </div>
---->
+           
         </div>
     </div>
 </div>
-
-
 <%@ include file="/WEB-INF/template/footer.jsp"%>
 

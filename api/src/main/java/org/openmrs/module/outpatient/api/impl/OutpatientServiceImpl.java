@@ -16,8 +16,10 @@ package org.openmrs.module.outpatient.api.impl;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.outpatient.Outpatient;
 import org.openmrs.module.outpatient.api.OutpatientService;
 import org.openmrs.module.outpatient.api.db.OutpatientDAO;
+import java.util.List;
 
 /**
  * It is a default implementation of {@link OutpatientService}.
@@ -40,5 +42,30 @@ public class OutpatientServiceImpl extends BaseOpenmrsService implements Outpati
      */
     public OutpatientDAO getDao() {
 	    return dao;
+    }
+
+
+
+    @Override
+    public List<Outpatient> getAllOutpatient() {
+        return dao.getAllOutpatient();
+    }
+
+    @Override
+    public Outpatient getOutpatient(Integer opdId) {
+        return dao.getOutpatient(opdId);
+    }
+    @Override
+    public Outpatient getOutpatientbyIdentifier(String opdId) {
+        return dao.getOutpatientbyIdentifier(opdId);
+    }
+    @Override
+    public Outpatient saveOutpatient(Outpatient outpatient) {
+        return dao.saveOutpatient(outpatient);
+    }
+
+    @Override
+    public void purgeOutpatient(Outpatient outpatient) {
+        dao.purgeOutpatient(outpatient);
     }
 }

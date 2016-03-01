@@ -1,18 +1,21 @@
-<openmrs:htmlInclude file="/moduleResources/inpatient/tablejs/jquery.min.js" />
-<openmrs:htmlInclude file="/moduleResources/inpatient/bootstrap/js/bootstrap.min.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/jquery.min.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/bootstrap/js/bootstrap.min.js" />
 <%--Date Time picker css and js--%>
-<openmrs:htmlInclude file="/moduleResources/inpatient/bootstrap/css/bootstrap-datetimepicker.css" />
-<openmrs:htmlInclude file="/moduleResources/inpatient/bootstrap/js/moment-with-locales.js" />
-<openmrs:htmlInclude file="/moduleResources/inpatient/bootstrap/js/bootstrap-datetimepicker.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/bootstrap/css/bootstrap-datetimepicker.css" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/bootstrap/js/moment-with-locales.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/bootstrap/js/bootstrap-datetimepicker.js" />
 
 
 <%--Data tables js and css--%>
-<%--<openmrs:htmlInclude file="/moduleResources/inpatient/tablejs/jquery.dataTables.min.css" />--%>
-<openmrs:htmlInclude file="/moduleResources/inpatient/tablejs/jquery.dataTables.min.js" />
-<openmrs:htmlInclude file="/moduleResources/inpatient/tablejs/dataTables.bootstrap.css" />
-<openmrs:htmlInclude file="/moduleResources/inpatient/tablejs/dataTables.bootstrap.js" />
-<openmrs:htmlInclude file="/moduleResources/inpatient/tablejs/tableTools.js" />
-<%--<openmrs:htmlInclude file="/moduleResources/inpatient/tablejs/tablebootstrap.js" />--%>
+<%--<openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/jquery.dataTables.min.css" />--%>
+<openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/jquery.dataTables.min.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/dataTables.bootstrap.css" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/dataTables.bootstrap.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/tablejsdbhddfhbdffhh/tableTools.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/css/manage.css" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/img/search.gif"/>
+<openmrs:htmlInclude file="/moduleResources/outpatient/img/patient.png" />
+<%--<openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/tablebootstrap.js" />--%>
 <%--DWR search--%>
 <script src="<openmrs:contextPath/>/dwr/interface/DWRPatientService.js"></script>
 <openmrs:htmlInclude file="/dwr/engine.js" ></openmrs:htmlInclude>

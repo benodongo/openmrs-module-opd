@@ -1,0 +1,38 @@
+h2{
+	margin-top:0px;
+	font-weight:normal;
+	background-color:lightskyblue;
+	
+	padding-left:20px;
+	border-top-left-radius:15px;
+	border-top-right-radius:15px;
+	height:50px;
+	padding-top:5px;	
+	
+}
+.imgur{
+	width:100px;
+	height:100px;
+	margin-bottom:5px;
+	padding-right:10px;
+}
+
+.dash{
+	float:left;
+	padding-left:20px;
+	padding-right:30px;
+	padding-bottom:20px;
+}
+.dash a{
+	text-decoration:none;
+}
+#scd{
+	margin-right:5px;
+}
+#dashboard{
+	margin-left:100px;
+	width:1000px;
+	height:400px;
+	border:1px solid black;
+	border-radius:15px;
+}
