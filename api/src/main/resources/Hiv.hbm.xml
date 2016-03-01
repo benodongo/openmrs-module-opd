@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.outpatient">
+
+    <class name="Hiv" table="${project.parent.artifactId}_hiv">
+        <id name="hivId" type="java.lang.Integer" column="hiv_id">
+            <generator class="native">
+            </generator>
+        </id>
+        <discriminator column="hiv_id" insert="false"/>
+
+        <many-to-one name="outpatient" class="Outpatient" fetch="select">
+            <column name="opd_id" not-null="true" />
+        </many-to-one>
+
+        <property name="admissionDate" type="java.util.Date" column="admission_date"/>
+        <property name="serialCounter" type="java.lang.Integer" column="serial_counter"/>
+        <property name="artDate" type="java.util.Date" column="art_date"/>
+        <property name="eligibilityReason" type="java.lang.String" column="eligibility_reason"/>
+        <property name="clinicalStage" type="java.lang.String" column="clinical_stage"/>
+        <property name="cd4Value" type="java.lang.String" column="cd4_value"/>
+        <property name="height" type="java.lang.String" column="height"/>
+        <property name="weight" type="java.lang.String" column="weight"/>
+        <property name="ctxDate" type="java.util.Date" column="ctx_date"/>
+        <property name="tbDate" type="java.util.Date" column="tb_date"/>
+        <property name="tbReg" type="java.lang.String" column="tb_reg"/>
+        <property name="originalRegime" type="java.lang.String" column="original_regime"/>
+        <property name="createdBy" type="java.lang.String" column="created_by" />
+        <property name="dateCreated" type="java.util.Date" column="date_created" />
+        <property name="changedBy" type="java.lang.String" column="changed_by" />
+        <property name="dateChanged" type="java.util.Date" column="date_changed" />
+
+        <property name="uuid" type="java.lang.String" column="uuid"
+                  length="38" unique="true" />
+        <!-- Associations-->
+
+        <set name="encounters"  table="outpatient_encounter" inverse="true" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="hiv_id" not-null="true" />
+            </key>
+            <one-to-many class="OutpatientEncounter" />
+        </set>
+
+
+    </class>
+
+</hibernate-mapping>

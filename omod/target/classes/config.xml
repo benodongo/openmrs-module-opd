@@ -34,6 +34,8 @@
 		Outpatient.hbm.xml
 		Immunization.hbm.xml
 		Maternal.hbm.xml
+		Hiv.hbm.xml
+		OutpatientEncounter.hbm.xml
 				
 	</mappingFiles>
 
