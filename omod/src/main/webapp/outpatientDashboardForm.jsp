@@ -69,13 +69,18 @@
             });
 
 
-            $('#dischargeModal').on('show.bs.modal', function(event) {
+            $('#immEncounterModal').on('show.bs.modal', function(event) {
                 var btn = $(event.relatedTarget);
                 var id = btn.data('id');
-                $("#admissionId").val(id);
+                $("#patientId").val(id);
+            });
+            $('#maternalEncounterModal').on('show.bs.modal', function(event) {
+                var btn = $(event.relatedTarget);
+                var id = btn.data('id');
+                $("#patientId").val(id);
             });
 
-            $('#encounterModal').on('show.bs.modal', function(event) {
+            $('#hivEncounterModal').on('show.bs.modal', function(event) {
                 var btn = $(event.relatedTarget);
                 var id = btn.data('id');
                 $("#patientId").val(id);
@@ -127,8 +132,8 @@
                         <li role="presentation" class="active"><a href="#overview" aria-controls="home" role="tab" data-toggle="tab">Overview</a></li>
                         <li role="presentation"><a href="#immunization" aria-controls="immunization" role="tab" data-toggle="tab">Child Clinic</a></li>
                         <li role="presentation"><a href="#admission" aria-controls="admission" role="tab" data-toggle="tab">General OPD clinic</a></li>
-                        <li role="presentation"><a href="#maternal" aria-controls="admission" role="tab" data-toggle="tab">Maternal Care</a></li>
-                        <li role="presentation"><a href="#hiv" aria-controls="admission" role="tab" data-toggle="tab">HIV Care</a></li>
+                        <li role="presentation"><a href="#maternal" aria-controls="maternal" role="tab" data-toggle="tab">Maternal Care</a></li>
+                        <li role="presentation"><a href="#hiv" aria-controls="hiv" role="tab" data-toggle="tab">HIV Care</a></li>
                         <li role="presentation"><a href="#demographics" aria-controls="orders" role="tab" data-toggle="tab">Demographics</a></li>
                     </ul>
 
@@ -166,7 +171,7 @@
 
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-pills">
-                                        <li  class="active"><a  data-toggle="pill" href="#home" >Add Encounters</a></li>
+                                        <li r class="active"><a  data-toggle="pill" href="#home" >Add Encounters</a></li>
                                         <li><a  data-toggle="pill" href="#profile">List Encounters</a></li>
                                     </ul>
 
@@ -251,14 +256,14 @@
 
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-pills">
-                                        <li  class="active"><a  data-toggle="pill" href="#home" >Add Encounters</a></li>
-                                        <li><a  data-toggle="pill" href="#profile">List Encounters</a></li>
+                                        <li r class="active"><a  data-toggle="pill" href="#home2" >Add Encounters</a></li>
+                                        <li><a  data-toggle="pill" href="#profile2">List Encounters</a></li>
                                     </ul>
 
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                             <%--Add Encounter--%>
-                                        <div role="tabpanel" class="tab-pane active" id="home">
+                                        <div role="tabpanel" class="tab-pane active" id="home2">
                                             <div>
                                                 <br>
                                                 <br>
@@ -268,7 +273,7 @@
                                             </div>
                                         </div>
 
-                                        <div role="tabpanel" class="tab-pane" id="profile">
+                                        <div role="tabpanel" class="tab-pane" id="profile2">
 
                                             <div class="col-md-10 col-offset-md-1">
                                                 <h3>Encounters</h3>
@@ -336,14 +341,14 @@
 
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-pills">
-                                        <li  class="active"><a  data-toggle="pill" href="#home" >Add Encounters</a></li>
-                                        <li><a  data-toggle="pill" href="#profile">List Encounters</a></li>
+                                        <li r class="active"><a  data-toggle="pill" href="#home3" >Add Encounters</a></li>
+                                        <li><a  data-toggle="pill" href="#profile3">List Encounters</a></li>
                                     </ul>
 
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                             <%--Add Encounter--%>
-                                        <div role="tabpanel" class="tab-pane active" id="home">
+                                        <div role="tabpanel" class="tab-pane active" id="home3">
                                             <div>
                                                 <br>
                                                 <br>
@@ -353,7 +358,7 @@
                                             </div>
                                         </div>
 
-                                        <div role="tabpanel" class="tab-pane" id="profile">
+                                        <div role="tabpanel" class="tab-pane" id="profile3">
 
                                             <div class="col-md-10 col-offset-md-1">
                                                 <h3>Encounters</h3>
@@ -466,7 +471,8 @@
             </div>
         </div>
     </div>
-<!--pop up the immunization form -->
+</div>
+   <!--pop up the immunization form -->
     <div class="modal fade" id="immunizationModal" tabindex="-1" role="dialog" aria-labelledby="immunizationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -480,12 +486,7 @@
                         <div class="form-group col-md-offset-2 col-md-8">
                             <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveImmunization.form' />">
 
-                                <input id="opdId" type="hidden" name="opd_id"  required />
-
-                                <%--<div class="form-group">--%>
-                                <%--<label>Admission Date</label>--%>
-                                <%--<input type="date" class="form-control" name="admission_date"   required />--%>
-                                <%--</div>--%>
+                                <input id="opdId" type="hidden" name="opd_id" value="${outpatient.patient.patientId}" required />
                                 <div class="form-group">
                                     <label>BCG date</label>
                                     <div class='input-group date' id='bcgDate'>
@@ -763,7 +764,7 @@
         <!-- Modal for View -->
         <!-- not yet implemented -->
 <%--Encounter Modal--%>
-<div class="modal fade" id="immEncounterModal" tabindex="-1" role="dialog" aria-labelledby="encounterModalLabel" aria-hidden="true">
+<div class="modal fade" id="immEncounterModal" tabindex="-1" role="dialog" aria-labelledby="immEncounterModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -777,7 +778,7 @@
                         <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveEncounter.form' />">
 
                             <input id="patientId" type="hidden" class="form-control" name="patient_id"  required />
-                            <input type="hidden"  name="admission_id"  value="${admission.admissionId}" />
+                            <input type="hidden"  name="immunization_id"  value="${immunization.immunizationId}" />
 
                             <div class="form-group">
                                 <label>Encounter Date</label>

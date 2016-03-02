@@ -126,17 +126,26 @@ public class  OutpatientManageController {
         }
         catch (Exception ex)
         {
-            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Error adding Inpatient");
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Error adding outpatient");
             return "redirect:outpatient.form?id="+patientId;
         }
 
         return "redirect:processRequest.form?id="+patientId;
 
     }
+    //list all outpatients
+    @RequestMapping(value = "/module/outpatient/listOutpatient.form", method = RequestMethod.GET)
+    public void listOutpatient(ModelMap model) {
+        OutpatientService outpatientService=Context.getService(OutpatientService.class);
+        List<Outpatient>outpatientList=outpatientService.getAllOutpatient();
 
+
+        model.addAttribute("outpatientList", outpatientList);
+
+    }
     //Display Immunization Form
     @RequestMapping(value = "/module/outpatient/immunization.form", method = RequestMethod.GET)
-    public void admissionForm(ModelMap model,
+    public void immunizationForm(ModelMap model,
                               @RequestParam(value = "id", required = true)String opdId) {
         model.addAttribute("opdId", opdId);
     }
@@ -158,6 +167,13 @@ public class  OutpatientManageController {
             Outpatient outpatient=outpatientService.getOutpatient(patientId);
             Patient patient=outpatient.getPatient();
 
+            //check if patient is alive
+            if(patient.getDead())
+            {
+                httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Patient is Dead");
+                return "redirect:listoutpatient.form";
+            }
+
             Immunization immunization=new Immunization();
             immunization.setPolio1Date(polio1Date);
             immunization.setPolio2Date(polio2Date);
@@ -168,10 +184,17 @@ public class  OutpatientManageController {
             immunization.setChangedBy(Context.getAuthenticatedUser().toString());
             immunization.setDateCreated(new Date());
 
-            //save immunization
-            immunizationService.saveImmunization(immunization);
-            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Records added  details Successfully");
-        }
+            immunization.setOutpatient(outpatient);
+            Boolean addImmunization = true;
+            Set<Immunization> immunizationSet = outpatient.getImmunizations();
+            if(addImmunization) {
+
+                immunizationService.saveImmunization(immunization);
+
+                httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added immunization records Successfully");
+            }
+            }
+
         catch (Exception ex)
         {
             httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Failed to save immunization details");
@@ -181,6 +204,18 @@ public class  OutpatientManageController {
 
 
         return "redirect:processRequest.form?id="+patientId;
+
+    }
+
+    //list all immunized patients
+    @RequestMapping(value = "/module/outpatient/listImmunization.form", method = RequestMethod.GET)
+    public void listImmunization(ModelMap model) {
+        ImmunizationService immunizationService=Context.getService(ImmunizationService.class);
+        List<Immunization> immunizationList=immunizationService.getAllImmunization();
+        List<Immunization> immunizations=new ArrayList<Immunization>();
+
+
+        model.addAttribute("immunizationList", immunizations);
 
     }
     @RequestMapping(value = "/module/outpatient/saveMaternal.form", method = RequestMethod.POST)

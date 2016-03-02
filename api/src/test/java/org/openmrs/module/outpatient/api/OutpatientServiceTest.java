@@ -26,5 +26,8 @@ public class  OutpatientServiceTest extends BaseModuleContextSensitiveTest {
 	@Test
 	public void shouldSetupContext() {
 		assertNotNull(Context.getService(OutpatientService.class));
+		assertNotNull(Context.getService(ImmunizationService.class));
+		assertNotNull(Context.getService(MaternalService.class));
+		assertNotNull(Context.getService(HivService.class));
 	}
 }
