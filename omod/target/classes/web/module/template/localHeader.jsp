@@ -24,19 +24,19 @@
 				code="admin.title.short" /></a></li>
 
 	<li
-		<c:if test='<%= request.getRequestURI().contains("outpatientClinic") %>'>class="active"</c:if>>
+		<c:if test='<%= request.getRequestURI().contains("/manage") %>'>class="active"</c:if>>
 		<a
 		href="${pageContext.request.contextPath}/module/outpatient/manage.form"><spring:message
 				code="outpatient.manage" /></a>
 	</li>
-	<li <c:if test='<%= request.getRequestURI().contains("htmlForms") %>'>class="active"</c:if>>
-		<a href="${pageContext.request.contextPath}/module/htmlformentry/htmlForms.list">
-			<spring:message code="htmlformentry.manage"/>
+	<li <c:if test='<%= request.getRequestURI().contains("/listOutpatient") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/outpatient/listOutpatient.form">
+			<spring:message code="Outpatient"/>
 		</a>
 	</li>
-	<li <c:if test='<%= request.getRequestURI().contains("htmlFormFromFile") %>'>class="active"</c:if>>
-		<a href="${pageContext.request.contextPath}/module/htmlformentry/htmlFormFromFile.form">
-			<spring:message code="htmlformentry.preview"/>
+	<li <c:if test='<%= request.getRequestURI().contains("/listImmunization") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/outpatient/listImmunization.form">
+			<spring:message code="Immunization"/>
 		</a>
 	</li>
 	
