@@ -46,13 +46,7 @@
 
     }(jQuery));
 </script>
-<ul id="menu">
-    <li class="first" <c:if test='<%= request.getRequestURI().contains("/findPatient") %>'>class="active"</c:if>>
-        <a href="${pageContext.request.contextPath}/module/outpatient/findPatient.form">
-            <spring:message code="Entroll new Patient"/>
-        </a>
-    </li>
-</ul>
+
 
 <table class="table table-striped table-responsive table-hover" id="immunization_table">
     <thead>
@@ -87,7 +81,6 @@
             <td>${immunization.yellowFeverDate}</td>
 
             <!-- Button trigger modal -->
-            <!--
             <td> <button type="button" class="btn btn-info" data-toggle="modal" data-target="#viewModal_${count}">
                 <i class="fa fa-eye"></i>View
             </button></td>
@@ -100,7 +93,6 @@
                     <%--<button class="btn btn-success"> <i class="fa fa-check-square-o"></i> Discharge</button>--%>
                     <%--</a> --%>
             </td>
-            -->
         </tr>
     </c:forEach>
     </tbody>

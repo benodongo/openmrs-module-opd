@@ -17,9 +17,9 @@ public interface ImmunizationService extends OpenmrsService {
     @Transactional(readOnly = true)
     Immunization getImmunization(Integer immunizationId);
 
-    //Saves immunization
+    //Saves admission
     Immunization saveImmunization(Immunization immunization);
 
-    //deletes an immunization
+    //deletes an admission
     void purgeImmunization(Immunization immunization);
 }

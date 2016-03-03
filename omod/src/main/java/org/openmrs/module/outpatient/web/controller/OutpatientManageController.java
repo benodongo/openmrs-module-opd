@@ -154,7 +154,6 @@ public class  OutpatientManageController {
     @RequestMapping(value = "/module/outpatient/saveImmunization.form", method = RequestMethod.POST)
     public String saveImmunization(ModelMap model,HttpSession httpSession,WebRequest webRequest,
                                 @RequestParam(value = "opd_id", required = true)Integer patientId,
-                                @RequestParam(value="bcg_date", required=true)Date bcgDate,
                                 @RequestParam(value = "polio1_date", required = true)Date polio1Date,
                                 @RequestParam(value = "polio2_date", required = true)Date polio2Date,
                                 @RequestParam(value = "polio3_date", required = true)Date polio3Date,
@@ -176,7 +175,6 @@ public class  OutpatientManageController {
             }
 
             Immunization immunization=new Immunization();
-            immunization.setBcgDate(bcgDate);
             immunization.setPolio1Date(polio1Date);
             immunization.setPolio2Date(polio2Date);
             immunization.setPolio3Date(polio3Date);
@@ -189,13 +187,6 @@ public class  OutpatientManageController {
             immunization.setOutpatient(outpatient);
             Boolean addImmunization = true;
             Set<Immunization> immunizationSet = outpatient.getImmunizations();
-                for (Immunization imm:immunizationSet)
-                {
-                    addImmunization=false;
-                    break;
-                }
-
-
             if(addImmunization) {
 
                 immunizationService.saveImmunization(immunization);
@@ -223,10 +214,7 @@ public class  OutpatientManageController {
         List<Immunization> immunizationList=immunizationService.getAllImmunization();
         List<Immunization> immunizations=new ArrayList<Immunization>();
 
-        for(Immunization imm:immunizationList)
-        {
-            immunizations.add(imm);
-        }
+
         model.addAttribute("immunizationList", immunizations);
 
     }
@@ -256,24 +244,9 @@ public class  OutpatientManageController {
             maternal.setEstimatedDelivery(estimatedDelivery);
             maternal.setChangedBy(Context.getAuthenticatedUser().toString());
             maternal.setDateCreated(new Date());
-
-
-            maternal.setOutpatient(outpatient);
-            Boolean addMaternal = true;
-            Set<Maternal> maternalSet = outpatient.getMaternals();
-            for (Maternal mat:maternalSet)
-            {
-                addMaternal=false;
-                break;
-            }
-
-
-            if(addMaternal) {
-
-                maternalService.saveMaternal(maternal);
-
-                httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added maternal records Successfully");
-            }
+            //save maternal
+            maternalService.saveMaternal(maternal);
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added maternal details Successfully");
         }
         catch (Exception ex)
         {
@@ -282,22 +255,6 @@ public class  OutpatientManageController {
 
         }
         return "redirect:processRequest.form?id="+patientId;
-
-    }
-
-    //list all patients under maternal care
-
-    @RequestMapping(value = "/module/outpatient/listMaternal.form", method = RequestMethod.GET)
-    public void listMaternal(ModelMap model) {
-        MaternalService maternalService=Context.getService(MaternalService.class);
-        List<Maternal> maternalList=maternalService.getAllMaternal();
-        List<Maternal> maternals=new ArrayList<Maternal>();
-
-        for(Maternal mat:maternalList)
-        {
-            maternals.add(mat);
-        }
-        model.addAttribute("maternalList", maternals);
 
     }
     //save hiv form
@@ -340,49 +297,46 @@ public class  OutpatientManageController {
             hiv.setOriginalRegime(originalRegime);
             hiv.setChangedBy(Context.getAuthenticatedUser().toString());
             hiv.setDateCreated(new Date());
-
-            hiv.setOutpatient(outpatient);
-            Boolean addHiv = true;
-            Set<Hiv> hivSet = outpatient.getHivs();
-            for (Hiv hv:hivSet)
-            {
-                addHiv=false;
-                break;
-            }
-
-
-            if(addHiv) {
-
-                hivService.saveHiv(hiv);
-
-                httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added Hiv records Successfully");
-            }
+            //save Hiv
+            hivService.saveHiv(hiv);
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added hiv details Successfully");
         }
-
         catch (Exception ex)
         {
-            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Failed to save Hiv details");
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Failed to save hiv details");
             return "redirect:processRequest.form?id="+patientId;
 
         }
-
-
         return "redirect:processRequest.form?id="+patientId;
 
     }
-    //list all immunized patients
-    @RequestMapping(value = "/module/outpatient/listHiv.form", method = RequestMethod.GET)
-    public void listHiv(ModelMap model) {
-        HivService hivService=Context.getService(HivService.class);
-        List<Hiv> hivList=hivService.getAllHiv();
-        List<Hiv> hivs=new ArrayList<Hiv>();
 
-        for(Hiv hivObj:hivList)
-        {
-            hivs.add(hivObj);
-        }
-        model.addAttribute("hivList", hivs);
 
+    //create patient form
+    @RequestMapping(value = "/module/outpatient/create", method = RequestMethod.GET)
+    public void create(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
     }
+    //maternal  form
+    @RequestMapping(value = "/module/outpatient/maternity", method = RequestMethod.GET)
+    public void maternity(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
+    }
+    //antenatal
+    @RequestMapping(value = "/module/outpatient/antenatal", method = RequestMethod.GET)
+    public void antenatal(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
+    }
+    //postnatal  form
+    @RequestMapping(value = "/module/outpatient/postnatal", method = RequestMethod.GET)
+    public void postnatal(ModelMap model) {
+        List<Patient> allPatients = Context.getPatientService().getAllPatients();
+        model.addAttribute("patients", allPatients);
+    }
+
+
 
 }

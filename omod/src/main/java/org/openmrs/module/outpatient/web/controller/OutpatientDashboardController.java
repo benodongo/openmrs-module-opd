@@ -38,9 +38,10 @@ public class OutpatientDashboardController {
     /**
      * render the patient dashboard model and direct to the view
      */
+
     @RequestMapping(value="/module/outpatient/outpatientDashboardForm.form", method = RequestMethod.GET)
     protected void renderDashboard(@RequestParam(required = true, value = "id") Integer patientId, ModelMap map)
-            throws Exception {
+           throws Exception {
         //Services
         OutpatientService outpatientService=Context.getService(OutpatientService.class);
         ImmunizationService immunizationService=Context.getService(ImmunizationService.class);
@@ -66,37 +67,9 @@ public class OutpatientDashboardController {
           map.put("outpatient", outpatient);
         //immunizations
         Set<Immunization> immunizationList=outpatient.getImmunizations();
-        Immunization immunization = null;
+        List<Immunization> immunizations=null;
+        Immunization immunization=null;
 
-        for(Immunization imm:immunizationList) {
-           if(imm.getOutpatient().getOutPatientId()== patientId) {
-               immunization = imm;
-           }
-        }
-/*
-        //maternitys
-        Set<Maternal> maternalList=outpatient.getMaternals();
-        Maternal maternal = null;
-
-        for(Maternal mat:maternalList) {
-            if(mat.getOutpatient().getOutPatientId()== patientId) {
-                maternal = mat;
-            }
-        }
-
-
-      //hiv
-        Set<Hiv> hivList=outpatient.getHivs();
-        Hiv hiv = null;
-
-        for(Hiv hivObj:hivList) {
-            if(hivObj.getOutpatient().getOutPatientId()== patientId) {
-                hiv = hivObj;
-            }
-        }
-*/
-
-        //encounter
 
         Set<OutpatientEncounter>immunizationSet=null;
         List<Location> locationList=null;
@@ -120,11 +93,10 @@ public class OutpatientDashboardController {
         catch (ObjectRetrievalFailureException ex) {
             log.warn("Error retrieving objects");
         }
-
-        //passes
+        //immunization and immunization list
         map.put("immunization", immunization);
-      //  map.put("maternal", maternal);
-      //  map.put("hiv", hiv);
+        map.put("immunizationList", immunizations);
+
         //Location details
         map.put("locationList", locationList);
         //Encounter Types
@@ -133,6 +105,7 @@ public class OutpatientDashboardController {
         map.put("encounterList", encounterList);
         //openmrs patient identifier
         map.put("patientIdentifier", patientIdentifier);
+
 
     }
     //process Search request
