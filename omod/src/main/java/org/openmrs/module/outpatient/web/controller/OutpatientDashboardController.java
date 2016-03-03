@@ -12,9 +12,10 @@ import org.openmrs.api.*;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.outpatient.*;
 import org.openmrs.module.outpatient.api.ImmunizationService;
-//import org.openmrs.module.outpatient.api.OutpatientEncounterService;
+import org.openmrs.module.outpatient.api.OutpatientEncounterService;
 import org.openmrs.module.outpatient.api.OutpatientService;
-//import org.openmrs.module.outpatient.api.WardService;
+import org.openmrs.module.outpatient.api.MaternalService;
+import org.openmrs.module.outpatient.api.HivService;
 import org.openmrs.module.web.extension.provider.Link;
 import org.openmrs.util.MetadataComparator;
 import org.openmrs.util.OpenmrsConstants;
@@ -43,6 +44,10 @@ public class OutpatientDashboardController {
            throws Exception {
         //Services
         OutpatientService outpatientService=Context.getService(OutpatientService.class);
+        ImmunizationService immunizationService=Context.getService(ImmunizationService.class);
+        MaternalService maternalService=Context.getService(MaternalService.class);
+        HivService hivService=Context.getService(HivService.class);
+        EncounterService encounterService=Context.getEncounterService();
 
         Outpatient outpatient=null;
 
@@ -60,6 +65,48 @@ public class OutpatientDashboardController {
 
          log.debug("outpatient: '" + outpatient + "'");
           map.put("outpatient", outpatient);
+        //immunizations
+        Set<Immunization> immunizationList=outpatient.getImmunizations();
+        List<Immunization> immunizations=null;
+        Immunization immunization=null;
+
+
+        Set<OutpatientEncounter>immunizationSet=null;
+        List<Location> locationList=null;
+        List<EncounterType>encounterTypeList=null;
+        Set<OutpatientEncounter>encounterList=null;
+        String patientIdentifier=null;
+
+
+        if(immunization !=null)
+        {
+            immunizationSet=immunization.getEncounters();
+            encounterList=immunization.getEncounters();
+        }
+
+        try {
+            locationList=Context.getLocationService().getAllLocations();
+            encounterTypeList=Context.getEncounterService().getAllEncounterTypes();
+            patientIdentifier=outpatient.getPatient().getPatientIdentifier().toString();
+
+        }
+        catch (ObjectRetrievalFailureException ex) {
+            log.warn("Error retrieving objects");
+        }
+        //immunization and immunization list
+        map.put("immunization", immunization);
+        map.put("immunizationList", immunizations);
+
+        //Location details
+        map.put("locationList", locationList);
+        //Encounter Types
+        map.put("encounterTypeList", encounterTypeList);
+        //Listing Encounters
+        map.put("encounterList", encounterList);
+        //openmrs patient identifier
+        map.put("patientIdentifier", patientIdentifier);
+
+
     }
     //process Search request
     @RequestMapping(value = "/module/outpatient/processRequest.form", method = RequestMethod.GET)

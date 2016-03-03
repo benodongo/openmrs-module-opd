@@ -21,6 +21,7 @@ import org.openmrs.api.PersonService;
 import org.openmrs.module.outpatient.api.OutpatientService;
 import org.openmrs.module.outpatient.api.ImmunizationService;
 import org.openmrs.module.outpatient.api.MaternalService;
+import org.openmrs.module.outpatient.api.HivService;
 import org.openmrs.api.context.Context;
 import org.openmrs.validator.PatientIdentifierValidator;
 import org.springframework.stereotype.Controller;
@@ -125,17 +126,26 @@ public class  OutpatientManageController {
         }
         catch (Exception ex)
         {
-            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Error adding Inpatient");
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Error adding outpatient");
             return "redirect:outpatient.form?id="+patientId;
         }
 
         return "redirect:processRequest.form?id="+patientId;
 
     }
+    //list all outpatients
+    @RequestMapping(value = "/module/outpatient/listOutpatient.form", method = RequestMethod.GET)
+    public void listOutpatient(ModelMap model) {
+        OutpatientService outpatientService=Context.getService(OutpatientService.class);
+        List<Outpatient>outpatientList=outpatientService.getAllOutpatient();
 
+
+        model.addAttribute("outpatientList", outpatientList);
+
+    }
     //Display Immunization Form
     @RequestMapping(value = "/module/outpatient/immunization.form", method = RequestMethod.GET)
-    public void admissionForm(ModelMap model,
+    public void immunizationForm(ModelMap model,
                               @RequestParam(value = "id", required = true)String opdId) {
         model.addAttribute("opdId", opdId);
     }
@@ -157,6 +167,13 @@ public class  OutpatientManageController {
             Outpatient outpatient=outpatientService.getOutpatient(patientId);
             Patient patient=outpatient.getPatient();
 
+            //check if patient is alive
+            if(patient.getDead())
+            {
+                httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Patient is Dead");
+                return "redirect:listoutpatient.form";
+            }
+
             Immunization immunization=new Immunization();
             immunization.setPolio1Date(polio1Date);
             immunization.setPolio2Date(polio2Date);
@@ -167,10 +184,17 @@ public class  OutpatientManageController {
             immunization.setChangedBy(Context.getAuthenticatedUser().toString());
             immunization.setDateCreated(new Date());
 
-            //save immunization
-            immunizationService.saveImmunization(immunization);
-            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Records added  details Successfully");
-        }
+            immunization.setOutpatient(outpatient);
+            Boolean addImmunization = true;
+            Set<Immunization> immunizationSet = outpatient.getImmunizations();
+            if(addImmunization) {
+
+                immunizationService.saveImmunization(immunization);
+
+                httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added immunization records Successfully");
+            }
+            }
+
         catch (Exception ex)
         {
             httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Failed to save immunization details");
@@ -182,11 +206,23 @@ public class  OutpatientManageController {
         return "redirect:processRequest.form?id="+patientId;
 
     }
+
+    //list all immunized patients
+    @RequestMapping(value = "/module/outpatient/listImmunization.form", method = RequestMethod.GET)
+    public void listImmunization(ModelMap model) {
+        ImmunizationService immunizationService=Context.getService(ImmunizationService.class);
+        List<Immunization> immunizationList=immunizationService.getAllImmunization();
+        List<Immunization> immunizations=new ArrayList<Immunization>();
+
+
+        model.addAttribute("immunizationList", immunizations);
+
+    }
     @RequestMapping(value = "/module/outpatient/saveMaternal.form", method = RequestMethod.POST)
     public String saveMaternal(ModelMap model,HttpSession httpSession,WebRequest webRequest,
                                 @RequestParam(value = "opd_id", required = true)Integer patientId,
                                 @RequestParam(value= "anc_visits",required= true)String ancVisits,
-                                @RequestParam(value="marital_status", required=true)Integer maritalStatus,
+                                @RequestParam(value="marital_status", required=true)String maritalStatus,
                                 @RequestParam(value="parity", required=true)String parity,
                                 @RequestParam(value="gravida", required=true) String gravida,
                                 @RequestParam(value="last_menstrual" ,required=true) Date lastMenstrual,
@@ -218,8 +254,59 @@ public class  OutpatientManageController {
             return "redirect:processRequest.form?id="+patientId;
 
         }
+        return "redirect:processRequest.form?id="+patientId;
 
+    }
+    //save hiv form
+    @RequestMapping(value="/module/outpatient/saveHiv.form" ,method=RequestMethod.POST)
+    public String saveHiv(ModelMap model,HttpSession httpSession,WebRequest webRequest,
+                               @RequestParam(value = "opd_id", required = true)Integer patientId,
+                               @RequestParam(value="admission_date",required=true)Date admissionDate,
+                               @RequestParam(value="serial_counter",required=true)Integer serialCounter,
+                               @RequestParam(value="art_date", required=true)Date artDate,
+                               @RequestParam(value="eligibility_reason", required=true)String eligibilityReason,
+                               @RequestParam(value="clinical_stage",required=true)String clinicalStage,
+                               @RequestParam(value="cd4_value",required=true)String cd4Value,
+                               @RequestParam(value="height", required=true)String height,
+                               @RequestParam(value="weight" ,required=true)String weight,
+                               @RequestParam(value="ctx_date",required=true)Date ctxDate,
+                               @RequestParam(value="tb_date",required=true)Date tbDate,
+                               @RequestParam(value="tb_reg",required=true)String tbReg,
+                               @RequestParam(value="original_regime",required=true)String originalRegime
 
+    ){
+
+        HivService hivService=Context.getService(HivService.class);
+        OutpatientService outpatientService=Context.getService(OutpatientService.class);
+        try{
+            Outpatient outpatient=outpatientService.getOutpatient(patientId);
+            Patient patient=outpatient.getPatient();
+
+            Hiv hiv=new Hiv();
+            hiv.setAdmissionDate(admissionDate);
+            hiv.setSerialCounter(serialCounter);
+            hiv.setArtDate(artDate);
+            hiv.setEligibilityReason(eligibilityReason);
+            hiv.setClinicalStage(clinicalStage);
+            hiv.setCd4Value(cd4Value);
+            hiv.setHeight(height);
+            hiv.setWeight(weight);
+            hiv.setCtxDate(ctxDate);
+            hiv.setTbDate(tbDate);
+            hiv.setTbReg(tbReg);
+            hiv.setOriginalRegime(originalRegime);
+            hiv.setChangedBy(Context.getAuthenticatedUser().toString());
+            hiv.setDateCreated(new Date());
+            //save Hiv
+            hivService.saveHiv(hiv);
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added hiv details Successfully");
+        }
+        catch (Exception ex)
+        {
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Failed to save hiv details");
+            return "redirect:processRequest.form?id="+patientId;
+
+        }
         return "redirect:processRequest.form?id="+patientId;
 
     }

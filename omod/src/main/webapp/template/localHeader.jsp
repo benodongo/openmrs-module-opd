@@ -4,6 +4,9 @@
 <openmrs:htmlInclude file="/moduleResources/outpatient/bootstrap/css/bootstrap-datetimepicker.css" />
 <openmrs:htmlInclude file="/moduleResources/outpatient/bootstrap/js/moment-with-locales.js" />
 <openmrs:htmlInclude file="/moduleResources/outpatient/bootstrap/js/bootstrap-datetimepicker.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/bootstrap/js/bootstrap-datetimepicker.js" />
+
+
 
 
 <%--Data tables js and css--%>
@@ -11,10 +14,10 @@
 <openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/jquery.dataTables.min.js" />
 <openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/dataTables.bootstrap.css" />
 <openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/dataTables.bootstrap.js" />
-<openmrs:htmlInclude file="/moduleResources/outpatient/tablejsdbhddfhbdffhh/tableTools.js" />
+<openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/tableTools.js" />
 <openmrs:htmlInclude file="/moduleResources/outpatient/css/manage.css" />
-<openmrs:htmlInclude file="/moduleResources/outpatient/img/search.gif"/>
-<openmrs:htmlInclude file="/moduleResources/outpatient/img/patient.png" />
+
+
 <%--<openmrs:htmlInclude file="/moduleResources/outpatient/tablejs/tablebootstrap.js" />--%>
 <%--DWR search--%>
 <script src="<openmrs:contextPath/>/dwr/interface/DWRPatientService.js"></script>
@@ -27,19 +30,19 @@
 				code="admin.title.short" /></a></li>
 
 	<li
-		<c:if test='<%= request.getRequestURI().contains("outpatientClinic") %>'>class="active"</c:if>>
+		<c:if test='<%= request.getRequestURI().contains("/manage") %>'>class="active"</c:if>>
 		<a
 		href="${pageContext.request.contextPath}/module/outpatient/manage.form"><spring:message
 				code="outpatient.manage" /></a>
 	</li>
-	<li <c:if test='<%= request.getRequestURI().contains("htmlForms") %>'>class="active"</c:if>>
-		<a href="${pageContext.request.contextPath}/module/htmlformentry/htmlForms.list">
-			<spring:message code="htmlformentry.manage"/>
+	<li <c:if test='<%= request.getRequestURI().contains("/listOutpatient") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/outpatient/listOutpatient.form">
+			<spring:message code="Outpatient"/>
 		</a>
 	</li>
-	<li <c:if test='<%= request.getRequestURI().contains("htmlFormFromFile") %>'>class="active"</c:if>>
-		<a href="${pageContext.request.contextPath}/module/htmlformentry/htmlFormFromFile.form">
-			<spring:message code="htmlformentry.preview"/>
+	<li <c:if test='<%= request.getRequestURI().contains("/listImmunization") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/outpatient/listImmunization.form">
+			<spring:message code="Immunization"/>
 		</a>
 	</li>
 	

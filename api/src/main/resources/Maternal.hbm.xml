@@ -17,7 +17,7 @@
         </many-to-one>
 
         <property name="ancVisits" type="java.lang.String" column="anc_visits"/>
-        <property name="maritalStatus" type="java.lang.Integer" column="marital_status"/>
+        <property name="maritalStatus" type="java.lang.String" column="marital_status"/>
         <property name="parity" type="java.lang.String" column="parity"/>
         <property name="gravida" type="java.lang.String" column="gravida"/>
         <property name="lastMenstrual" type="java.util.Date" column="last_menstrual"/>
@@ -30,7 +30,12 @@
         <property name="uuid" type="java.lang.String" column="uuid"
                   length="38" unique="true" />
         <!-- Associations-->
-
+        <set name="encounters"  table="outpatient_encounter" inverse="true" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="maternal_id" not-null="true" />
+            </key>
+            <one-to-many class="OutpatientEncounter" />
+        </set>
 
 
 

@@ -27,6 +27,9 @@
             $('#yellowFeverDate').datetimepicker();
             $('#last_menstrual').datetimepicker();
             $('#estimated_delivery').datetimepicker();
+            $('#artDate').datetimepicker();
+            $('#ctxDate').datetimepicker();
+            $('#tbDate').datetimepicker();
 
             $('#encountertime').datetimepicker();
 
@@ -66,13 +69,18 @@
             });
 
 
-            $('#dischargeModal').on('show.bs.modal', function(event) {
+            $('#immEncounterModal').on('show.bs.modal', function(event) {
                 var btn = $(event.relatedTarget);
                 var id = btn.data('id');
-                $("#admissionId").val(id);
+                $("#patientId").val(id);
+            });
+            $('#maternalEncounterModal').on('show.bs.modal', function(event) {
+                var btn = $(event.relatedTarget);
+                var id = btn.data('id');
+                $("#patientId").val(id);
             });
 
-            $('#encounterModal').on('show.bs.modal', function(event) {
+            $('#hivEncounterModal').on('show.bs.modal', function(event) {
                 var btn = $(event.relatedTarget);
                 var id = btn.data('id');
                 $("#patientId").val(id);
@@ -124,9 +132,8 @@
                         <li role="presentation" class="active"><a href="#overview" aria-controls="home" role="tab" data-toggle="tab">Overview</a></li>
                         <li role="presentation"><a href="#immunization" aria-controls="immunization" role="tab" data-toggle="tab">Child Clinic</a></li>
                         <li role="presentation"><a href="#admission" aria-controls="admission" role="tab" data-toggle="tab">General OPD clinic</a></li>
-                        <li role="presentation"><a href="#maternal" aria-controls="admission" role="tab" data-toggle="tab">Maternal Care</a></li>
-                        <li role="presentation"><a href="#hiv" aria-controls="admission" role="tab" data-toggle="tab">HIV Care</a></li>
-                        <li role="presentation"><a href="#discharge" aria-controls="discharge" role="tab" data-toggle="tab">Past Admissions</a></li>
+                        <li role="presentation"><a href="#maternal" aria-controls="maternal" role="tab" data-toggle="tab">Maternal Care</a></li>
+                        <li role="presentation"><a href="#hiv" aria-controls="hiv" role="tab" data-toggle="tab">HIV Care</a></li>
                         <li role="presentation"><a href="#demographics" aria-controls="orders" role="tab" data-toggle="tab">Demographics</a></li>
                     </ul>
 
@@ -166,8 +173,6 @@
                                     <ul class="nav nav-pills">
                                         <li r class="active"><a  data-toggle="pill" href="#home" >Add Encounters</a></li>
                                         <li><a  data-toggle="pill" href="#profile">List Encounters</a></li>
-                                        <li><a  data-toggle="modal" href=""  data-id="${admission.admissionId}" data-target="#dischargeModal">
-                                            <i class="fa fa-check-square-o"></i>Discharge</a></li>
                                     </ul>
 
                                     <!-- Tab panes -->
@@ -178,7 +183,7 @@
                                                 <br>
                                                 <br>
                                                 <button class="btn btn-success btn-sm" data-toggle="modal"  data-id="${outpatient.outPatientId}"
-                                                        data-target="#encounterModal">
+                                                        data-target="#immEncounterModal">
                                                     <i class="fa fa-plus-square"></i>Encounter</button>
                                             </div>
                                         </div>
@@ -240,7 +245,7 @@
                                 </c:if>
                                 <c:if test="${outpatient.patient.dead==false}">
                                     <button type="button" class="btn btn-success" data-toggle="modal"  data-id="${outpatient.outPatientId}" data-target="#maternalModal">
-                                        <i class="fa fa-plus-square"></i>Enroll</button>
+                                        <i class="fa fa-plus-square"></i>Enroll to maternal care</button>
                                 </c:if>
                             </c:if>
 
@@ -251,26 +256,24 @@
 
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-pills">
-                                        <li r class="active"><a  data-toggle="pill" href="#home" >Add Encounters</a></li>
-                                        <li><a  data-toggle="pill" href="#profile">List Encounters</a></li>
-                                        <li><a  data-toggle="modal" href=""  data-id="${admission.admissionId}" data-target="#dischargeModal">
-                                            <i class="fa fa-check-square-o"></i>Discharge</a></li>
+                                        <li r class="active"><a  data-toggle="pill" href="#home2" >Add Encounters</a></li>
+                                        <li><a  data-toggle="pill" href="#profile2">List Encounters</a></li>
                                     </ul>
 
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                             <%--Add Encounter--%>
-                                        <div role="tabpanel" class="tab-pane active" id="home">
+                                        <div role="tabpanel" class="tab-pane active" id="home2">
                                             <div>
                                                 <br>
                                                 <br>
                                                 <button class="btn btn-success btn-sm" data-toggle="modal"  data-id="${outpatient.outPatientId}"
-                                                        data-target="#encounterModal">
+                                                        data-target="#maternalEncounterModal">
                                                     <i class="fa fa-plus-square"></i>Encounter</button>
                                             </div>
                                         </div>
 
-                                        <div role="tabpanel" class="tab-pane" id="profile">
+                                        <div role="tabpanel" class="tab-pane" id="profile2">
 
                                             <div class="col-md-10 col-offset-md-1">
                                                 <h3>Encounters</h3>
@@ -327,7 +330,7 @@
                                 </c:if>
                                 <c:if test="${outpatient.patient.dead==false}">
                                     <button type="button" class="btn btn-success" data-toggle="modal"  data-id="${outpatient.outPatientId}" data-target="#hivModal">
-                                        <i class="fa fa-plus-square"></i>Enroll</button>
+                                        <i class="fa fa-plus-square"></i>Enroll to hiv care</button>
                                 </c:if>
                             </c:if>
 
@@ -338,26 +341,24 @@
 
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-pills">
-                                        <li r class="active"><a  data-toggle="pill" href="#home" >Add Encounters</a></li>
-                                        <li><a  data-toggle="pill" href="#profile">List Encounters</a></li>
-                                        <li><a  data-toggle="modal" href=""  data-id="${admission.admissionId}" data-target="#dischargeModal">
-                                            <i class="fa fa-check-square-o"></i>Discharge</a></li>
+                                        <li r class="active"><a  data-toggle="pill" href="#home3" >Add Encounters</a></li>
+                                        <li><a  data-toggle="pill" href="#profile3">List Encounters</a></li>
                                     </ul>
 
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                             <%--Add Encounter--%>
-                                        <div role="tabpanel" class="tab-pane active" id="home">
+                                        <div role="tabpanel" class="tab-pane active" id="home3">
                                             <div>
                                                 <br>
                                                 <br>
                                                 <button class="btn btn-success btn-sm" data-toggle="modal"  data-id="${outpatient.outPatientId}"
-                                                        data-target="#encounterModal">
+                                                        data-target="#hivEncounterModal">
                                                     <i class="fa fa-plus-square"></i>Encounter</button>
                                             </div>
                                         </div>
 
-                                        <div role="tabpanel" class="tab-pane" id="profile">
+                                        <div role="tabpanel" class="tab-pane" id="profile3">
 
                                             <div class="col-md-10 col-offset-md-1">
                                                 <h3>Encounters</h3>
@@ -445,8 +446,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                     <th>Address </th>
-                                    <th>Telephone </th>
-                                    <th>City/Village </th>
+                                    <th>City </th>
                                     <th>County </th>
                                     <th>Country </th>
                                     <th>Postal Code </th>
@@ -471,7 +471,8 @@
             </div>
         </div>
     </div>
-<!--pop up the immunization form -->
+</div>
+   <!--pop up the immunization form -->
     <div class="modal fade" id="immunizationModal" tabindex="-1" role="dialog" aria-labelledby="immunizationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -485,12 +486,7 @@
                         <div class="form-group col-md-offset-2 col-md-8">
                             <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveImmunization.form' />">
 
-                                <input id="opdId" type="hidden" name="opd_id"  required />
-
-                                <%--<div class="form-group">--%>
-                                <%--<label>Admission Date</label>--%>
-                                <%--<input type="date" class="form-control" name="admission_date"   required />--%>
-                                <%--</div>--%>
+                                <input id="opdId" type="hidden" name="opd_id" value="${outpatient.patient.patientId}" required />
                                 <div class="form-group">
                                     <label>BCG date</label>
                                     <div class='input-group date' id='bcgDate'>
@@ -589,7 +585,7 @@
                             <div class="form-group col-md-offset-2 col-md-8">
                                 <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveMaternal.form' />">
 
-                                    <input id="opdId" type="hidden" name="opd_id"  required />
+                                    <input id="opdId" value="${outpatient.patient.patientId}"type="hidden" name="opd_id"  required />
 
                                     <%--<div class="form-group">--%>
                                     <%--<label>Admission Date</label>--%>
@@ -670,7 +666,7 @@
                             <div class="form-group col-md-offset-2 col-md-8">
                                 <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveHiv.form' />">
 
-                                    <input id="opdId" type="hidden" name="opd_id"  required />
+                                    <input id="opdId" value="${outpatient.patient.patientId}" type="hidden" name="opd_id"  required />
 
                                     <%--<div class="form-group">--%>
                                     <%--<label>Admission Date</label>--%>
@@ -691,7 +687,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>ART Start Date</label>
-                                        <div class='input-group date' id='admissionDate'>
+                                        <div class='input-group date' id='artDate'>
                                             <input type='text' class="form-control" name="art_date" required />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -700,7 +696,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Reason for Eligibilty</label>
-                                        <input type="text" class="form-control" name="eligibiliy_reason"   required />
+                                        <input type="text" class="form-control" name="eligibility_reason"   required />
                                     </div>
                                     <div class="form-group">
                                         <label>WHO Clinical Stage</label>
@@ -708,7 +704,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>CD4 Value (% for children)</label>
-                                        <input type="text" class="form-control" name="c4d_value"   required />
+                                        <input type="text" class="form-control" name="cd4_value"   required />
                                     </div>
                                     <div class="form-group">
                                         <label>Height of Child (cms)</label>
@@ -716,7 +712,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Weight in Kgs</label>
-                                        <input type="text" class="form-control" name="eligibiliy_reason"   required />
+                                        <input type="text" class="form-control" name="weight"   required />
                                     </div>
                                     <div class="form-group">
                                         <label>CTX Prophylaxis Start Date</label>
@@ -739,10 +735,6 @@
                                     <div class="form-group">
                                         <label>TB reg.No</label>
                                         <input type="text" class="form-control" name="tb_reg"   required />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>PMTCT No.</label>
-                                        <input type="text" class="form-control" name="maternal_id"   required />
                                     </div>
                                     <div class="form-group">
                                         <label>Original Regime</label>
@@ -770,125 +762,9 @@
         </div>
 
         <!-- Modal for View -->
-    <c:set var="count" value="0" scope="page" />
-    <c:forEach var="admission" items="${admissionList}" varStatus="status">
-        <c:set var="count" value="${count + 1}" scope="page"/>
-        <div class="modal fade" id="viewDischargeModal_${count}" tabindex="-1" role="dialog" aria-labelledby="viewDischargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="viewDischargeModalLabel"> Admission/Discharge Details</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <h4>Admission/Discharge Details</h4>
-                            <hr/>
-                            <p>Admission Date: &nbsp; ${admission.admissionDate}</p>
-                            <p>Discharge Date:&nbsp;${admission.discharge.dischargeDate}</p>
-                            <p>Hiv Status: &nbsp;${admission.hivStatus}</p>
-                            <p>Nutrition Status:&nbsp;${admission.nutritionStatus}</p>
-                            <p>Ward Name:&nbsp;${admission.ward.wardName}</p>
-                            <p>Guardian: &nbsp;${admission.guardian}</p>
-                            <p>Referral To:&nbsp;${admission.discharge.referralTo}</p>
-                            <p>Referral From:&nbsp;${admission.referralFrom}</p>
-                            <p>Discharge Remarks:&nbsp;${admission.discharge.remarks}</p>
-
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </c:forEach>
-
-</div>
-
-<div class="modal fade" id="dischargeModal" tabindex="-1" role="dialog" aria-labelledby="dischargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="dischargeModalLabel">Discharge Patient </h4>
-            </div>
-
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group col-md-offset-2 col-md-8">
-                        <form class="form-horizontal" method="post"  action="<c:url value='/module/inpatient/saveDischarge.form' />">
-
-                            <input id="admissionId" type="hidden" class="form-control" name="discharge_id"  required />
-
-                            <div class="form-group">
-                                <label>Discharge Date</label>
-                                <div class='input-group date' id='dischargetime'>
-                                    <input type='text' class="form-control" name="discharge_date"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Diagnosis</label>
-                                <input type="text" class="form-control" name="diagnosis"   required />
-                            </div>
-
-                            <div class="form-group">
-                                <label>Treatment</label>
-                                <input type="text" class="form-control" name="treatment"   required />
-                            </div>
-
-                            <div class="form-group">
-                                <label>Outcome</label>
-                                <select name="outcome" class="form-control" id="outcome_opt" required>
-                                    <option></option>
-                                    <option value="A">Alive</option>
-                                    <option value="D">Dead</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group" id="causeofdeath_opt" style="display:none;">
-                                <label>Cause of Death</label>
-                                <input type="Text" class="form-control" name="causeofdeath"  value="" />
-                            </div>
-
-                            <div class="form-group" id="referral_to_opt">
-                                <label>Referral To</label>
-                                <select class="form-control" name="referral_to">
-                                    <option value="0">None</option>
-                                    <option value="3">Other Health Facility</option>
-                                    <option value="4">Community Unit</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Remarks</label>
-                                <input type="Text" class="form-control" name="remarks"   />
-                            </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-
-            </div>
-            <%--<div class="modal-footer">--%>
-            <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
-            <%--&lt;%&ndash;<button type="submit" class="btn btn-primary">Save</button>&ndash;%&gt;--%>
-            <%--</div>--%>
-        </div>
-    </div>
-</div>
+        <!-- not yet implemented -->
 <%--Encounter Modal--%>
-<div class="modal fade" id="encounterModal" tabindex="-1" role="dialog" aria-labelledby="encounterModalLabel" aria-hidden="true">
+<div class="modal fade" id="immEncounterModal" tabindex="-1" role="dialog" aria-labelledby="immEncounterModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -899,10 +775,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group col-md-offset-2 col-md-8">
-                        <form class="form-horizontal" method="post"  action="<c:url value='/module/inpatient/saveEncounter.form' />">
+                        <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveEncounter.form' />">
 
                             <input id="patientId" type="hidden" class="form-control" name="patient_id"  required />
-                            <input type="hidden"  name="admission_id"  value="${admission.admissionId}" />
+                            <input type="hidden"  name="immunization_id"  value="${immunization.immunizationId}" />
 
                             <div class="form-group">
                                 <label>Encounter Date</label>
