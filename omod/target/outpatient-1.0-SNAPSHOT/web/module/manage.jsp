@@ -1,7 +1,7 @@
-<%@ include file="/WEB-INF/template/include.jsp"%>
-<%@ include file="/WEB-INF/template/header.jsp"%>
+<%@ include file="/WEB-INF/template/include.jsp" %>
+<%@ include file="/WEB-INF/template/header.jsp" %>
 
-<%@ include file="template/localHeader.jsp"%>
+<%@ include file="template/localHeader.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
         <i class="fa fa-spinner fa-spin"></i>&nbsp;Dashboard
@@ -79,5 +79,5 @@
 </div>
 
 
-<%@ include file="/WEB-INF/template/footer.jsp"%>
+<%@ include file="/WEB-INF/template/footer.jsp" %>
 
