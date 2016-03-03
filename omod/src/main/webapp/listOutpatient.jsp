@@ -42,7 +42,13 @@
     }(jQuery));
 
 </script>
-
+<ul id="menu">
+    <li class="first" <c:if test='<%= request.getRequestURI().contains("/findPatient") %>'>class="active"</c:if>>
+        <a href="${pageContext.request.contextPath}/module/outpatient/findPatient.form">
+            <spring:message code="Entroll new Patient"/>
+        </a>
+    </li>
+</ul>
 <table class="table table-striped table-responsive table-hover" id="outpatient_table">
     <thead>
     <tr>
