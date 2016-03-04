@@ -24,6 +24,7 @@ private Integer outpatientEncounterId;
 private Immunization immunization;
 private Maternal maternal;
 private Hiv hiv;
+private GeneralOpd generalOpd;
 
 //getters and setters
 
@@ -57,6 +58,14 @@ private Hiv hiv;
 
     public void setHiv(Hiv hiv) {
         this.hiv = hiv;
+    }
+
+    public GeneralOpd getGeneralOpd() {
+        return generalOpd;
+    }
+
+    public void setGeneralOpd(GeneralOpd generalOpd) {
+        this.generalOpd = generalOpd;
     }
 
     @Override

@@ -93,7 +93,14 @@
     <%--</tr>--%>
     </tbody>
 </table>
-
+<p>New patient ? use the link below </p>
+<ul id="menu">
+    <li class="first" <c:if test='<%= request.getRequestURI().contains("/findPatient") %>'>class="active"</c:if>>
+        <a href="${pageContext.request.contextPath}/findPatient.htm">
+            <spring:message code="Add Patient"/>
+        </a>
+    </li>
+</ul>
 
 
 

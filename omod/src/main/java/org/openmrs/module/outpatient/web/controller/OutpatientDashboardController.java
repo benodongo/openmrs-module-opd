@@ -38,10 +38,9 @@ public class OutpatientDashboardController {
     /**
      * render the patient dashboard model and direct to the view
      */
-
     @RequestMapping(value="/module/outpatient/outpatientDashboardForm.form", method = RequestMethod.GET)
     protected void renderDashboard(@RequestParam(required = true, value = "id") Integer patientId, ModelMap map)
-           throws Exception {
+            throws Exception {
         //Services
         OutpatientService outpatientService=Context.getService(OutpatientService.class);
         ImmunizationService immunizationService=Context.getService(ImmunizationService.class);
@@ -67,10 +66,13 @@ public class OutpatientDashboardController {
           map.put("outpatient", outpatient);
         //immunizations
         Set<Immunization> immunizationList=outpatient.getImmunizations();
-        List<Immunization> immunizations=null;
-        Immunization immunization=null;
+        Immunization immunization = null;
 
-
+        for(Immunization imm:immunizationList) {
+           if(imm.getOutpatient().getOutPatientId()== patientId) {
+               immunization = imm;
+           }
+        }
         Set<OutpatientEncounter>immunizationSet=null;
         List<Location> locationList=null;
         List<EncounterType>encounterTypeList=null;
@@ -93,10 +95,53 @@ public class OutpatientDashboardController {
         catch (ObjectRetrievalFailureException ex) {
             log.warn("Error retrieving objects");
         }
-        //immunization and immunization list
-        map.put("immunization", immunization);
-        map.put("immunizationList", immunizations);
 
+        //passes
+        map.put("immunization", immunization);
+
+        //maternitys
+        Set<Maternal> maternalList=outpatient.getMaternals();
+        Maternal maternal = null;
+
+        for(Maternal mat:maternalList) {
+            if(mat.getOutpatient().getOutPatientId()== patientId) {
+                maternal = mat;
+            }
+        }
+        Set<OutpatientEncounter>maternalSet=null;
+
+        if(maternal !=null)
+        {
+            maternalSet=maternal.getEncounters();
+            encounterList=maternal.getEncounters();
+        }
+
+        try {
+            locationList=Context.getLocationService().getAllLocations();
+            encounterTypeList=Context.getEncounterService().getAllEncounterTypes();
+            patientIdentifier=outpatient.getPatient().getPatientIdentifier().toString();
+
+        }
+        catch (ObjectRetrievalFailureException ex) {
+            log.warn("Error retrieving objects");
+        }
+
+
+/*
+      //hiv
+        Set<Hiv> hivList=outpatient.getHivs();
+        Hiv hiv = null;
+
+        for(Hiv hivObj:hivList) {
+            if(hivObj.getOutpatient().getOutPatientId()== patientId) {
+                hiv = hivObj;
+            }
+        }
+*/
+
+        //encounter
+      //  map.put("maternal", maternal);
+      //  map.put("hiv", hiv);
         //Location details
         map.put("locationList", locationList);
         //Encounter Types
@@ -105,7 +150,6 @@ public class OutpatientDashboardController {
         map.put("encounterList", encounterList);
         //openmrs patient identifier
         map.put("patientIdentifier", patientIdentifier);
-
 
     }
     //process Search request
@@ -130,6 +174,8 @@ public class OutpatientDashboardController {
 
         return "redirect:outpatientDashboardForm.form?id="+id;
     }
+
+
 
 }
 
