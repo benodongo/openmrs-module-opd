@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.outpatient">
+
+    <class name="Treatment"
+           table="${project.parent.artifactId}_treatment">
+
+        <id name="generalOpdId" type="java.lang.Integer" column="general_opd_id">
+            <generator class="foreign">
+                <param name="property">GeneralOpd</param>
+            </generator>
+        </id>
+
+        <one-to-one name="generalOpd" class="GeneralOpd" constrained="true" ></one-to-one>
+
+        <property name="treatmentId"  type="int" column="treatment_id" insert="false"/>
+
+        <property name="treatmentDate" type="java.util.Date" column="treatment_date"
+                  unique="true" />
+
+        <property name="diagnosis" type="java.lang.String" column="diagnosis"/>
+
+        <property name="treatment" type="java.lang.String" column="treatment"/>
+
+        <property name="outcome" type="java.lang.String" column="outcome"/>
+
+        <property name="causeOfDeath" type="java.lang.String" column="causeofdeath"/>
+
+        <property name="referralTo" type="java.lang.String" column="referral_to"/>
+
+        <property name="remarks" type="java.lang.String" column="remarks"/>
+
+        <property name="createdBy" type="java.lang.String" column="created_by" />
+        <property name="dateCreated" type="java.util.Date" column="date_created" />
+        <property name="changedBy" type="java.lang.String" column="changed_by" />
+        <property name="dateChanged" type="java.util.Date" column="date_changed" />
+
+        <property name="uuid" type="java.lang.String" column="uuid"
+                  length="38" unique="true" />
+
+    </class>
+
+</hibernate-mapping>

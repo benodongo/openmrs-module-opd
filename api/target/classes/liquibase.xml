@@ -51,7 +51,7 @@
         </createTable>
     </changeSet>
      <!--DB for maternal -->
-    <changeSet id="004" author="benson">
+    <changeSet id="003" author="benson">
         <comment>create the maternal Table</comment>
         <createTable tableName="outpatient_maternal">
             <column name="maternal_id" autoIncrement="true" type="int">
@@ -73,7 +73,7 @@
         </createTable>
     </changeSet>
     <!--DB for Hiv cre -->
-    <changeSet id="007" author="benson">
+    <changeSet id="004" author="benson">
         <comment>create the hiv table</comment>
         <createTable tableName="outpatient_hiv">
             <column name="hiv_id" autoIncrement="true" type="int">
@@ -100,8 +100,61 @@
 
         </createTable>
     </changeSet>
+    <changeSet  id="005" author="benson" >
+        <comment>Create the general opd</comment>
+        <createTable tableName="outpatient_generalOpd">
+
+            <column name="general_opd_id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="opd_id" type="int"  ></column>
+            <column name="visit_date" type="DATETIME" />
+            <column name="hiv_status" type="int" />
+            <column name="hiv_intervention" type="int"/>
+            <column name="nutrition_status" type="int"/>
+            <column name="guardian" type="varchar(100)" />
+            <column name="ward_id" type="int"/>
+            <column name="referral_from" type="varchar(100)"/>
+
+            <column name="created_by" type="varchar(50)"/>
+            <column name="date_created" type="DATETIME" />
+            <column name="changed_by" type="varchar(50)"/>
+            <column name="date_changed" type="DATETIME"  />
+
+            <column name="uuid" type="char(38)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet  id="006" author="benson" >
+        <comment>Create the treatment table</comment>
+        <createTable tableName="outpatient_treatment">
+
+            <column name="treatment_id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="general_opd_id" type="int">
+                <constraints nullable="false" unique="true" />
+            </column>
+
+            <column name="treatment_date" type="DATETIME" />
+            <column name="diagnosis" type="varchar(50)" />
+            <column name="outcome" type="varchar(50)"/>
+            <column name="treatment" type="varchar(50)" />
+            <column name="causeofdeath" type="varchar(50)"/>
+            <column name="referral_to" type="varchar(50)"/>
+            <column name="remarks" type="varchar(50)"/>
+
+            <column name="created_by" type="varchar(50)"/>
+            <column name="date_created" type="DATETIME" />
+            <column name="changed_by" type="varchar(50)"/>
+            <column name="date_changed" type="DATETIME"  />
+            <column name="uuid" type="char(38)"/>
+        </createTable>
+    </changeSet>
     <!--Encounter table-->
-    <changeSet id="10" author="ben" >
+    <changeSet id="007" author="benson" >
         <comment>Create the outpatient encounters table</comment>
         <createTable tableName="outpatient_encounter">
 
@@ -111,11 +164,13 @@
             <column name="immunization_id" type="int" />
             <column name="maternal_id" type="int" />
             <column name="hiv_id" type="int" />
+            <column name="general_opd_id" type="int"/>
         </createTable>
     </changeSet>
 
+
     <!-- Foreign key mappings -->
-    <changeSet id="12" author="benson">
+    <changeSet id="008" author="benson">
         <comment>addForeignKeyConstraint outpatient outpatient1</comment>
         <addForeignKeyConstraint baseColumnNames="outpatient_id"
                                  baseTableName="outpatient_outpatient1"
@@ -125,7 +180,7 @@
                                  referencedColumnNames="patient_id"
                                  referencedTableName="patient" />
     </changeSet>
-    <changeSet id="13" author="benson">
+    <changeSet id="009" author="benson">
         <comment>addForeignKeyConstraint outpatient immunization</comment>
         <addForeignKeyConstraint baseColumnNames="opd_id"
                                  baseTableName="outpatient_immunization"
@@ -135,7 +190,7 @@
                                  referencedColumnNames="outpatient_id"
                                  referencedTableName="outpatient_outpatient1" />
     </changeSet>
-    <changeSet id="18" author="benson">
+    <changeSet id="010" author="benson">
         <comment>addForeignKeyConstraint outpatient maternal</comment>
         <addForeignKeyConstraint baseColumnNames="opd_id"
                                  baseTableName="outpatient_maternal"
@@ -145,7 +200,7 @@
                                  referencedColumnNames="outpatient_id"
                                  referencedTableName="outpatient_outpatient1" />
     </changeSet>
-    <changeSet id="20" author="benson">
+    <changeSet id="011" author="benson">
         <comment>addForeignKeyConstraint outpatient hiv</comment>
         <addForeignKeyConstraint baseColumnNames="opd_id"
                                  baseTableName="outpatient_hiv"
@@ -155,7 +210,7 @@
                                  referencedColumnNames="outpatient_id"
                                  referencedTableName="outpatient_outpatient1" />
     </changeSet>
-    <changeSet id="15" author="benson">
+    <changeSet id="012" author="benson">
         <comment>addForeignKeyConstraint immunization encounter</comment>
         <addForeignKeyConstraint baseColumnNames="immunization_id"
                                  baseTableName="outpatient_encounter"
@@ -165,7 +220,7 @@
                                  referencedColumnNames="immunization_id"
                                  referencedTableName="outpatient_immunization" />
     </changeSet>
-    <changeSet id="16" author="benson">
+    <changeSet id="013" author="benson">
         <comment>addForeignKeyConstraint maternal encounter</comment>
         <addForeignKeyConstraint baseColumnNames="maternal_id"
                                  baseTableName="outpatient_encounter"
@@ -175,7 +230,7 @@
                                  referencedColumnNames="maternal_id"
                                  referencedTableName="outpatient_maternal" />
     </changeSet>
-    <changeSet id="17" author="benson">
+    <changeSet id="014" author="benson">
         <comment>addForeignKeyConstraint hiv encounter</comment>
         <addForeignKeyConstraint baseColumnNames="hiv_id"
                                  baseTableName="outpatient_encounter"
@@ -185,4 +240,25 @@
                                  referencedColumnNames="hiv_id"
                                  referencedTableName="outpatient_hiv" />
     </changeSet>
+    <changeSet id="015" author="benson">
+        <comment>addForeignKeyConstraint outpatient GeneralOpd</comment>
+        <addForeignKeyConstraint baseColumnNames="opd_id"
+                                 baseTableName="outpatient_generalOpd"
+                                 constraintName="fk_outpatient_generalOpd"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="outpatient_id"
+                                 referencedTableName="outpatient_outpatient1" />
+    </changeSet>
+    <changeSet id="016" author="benson">
+        <comment>addForeignKeyConstraint generalopd encounter</comment>
+        <addForeignKeyConstraint baseColumnNames="general_opd_id"
+                                 baseTableName="outpatient_encounter"
+                                 constraintName="fk_generalOpd_encounter"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="general_opd_id"
+                                 referencedTableName="outpatient_generalOpd" />
+    </changeSet>
+
 </databaseChangeLog>

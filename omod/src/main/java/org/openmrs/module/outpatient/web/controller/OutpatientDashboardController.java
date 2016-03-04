@@ -73,31 +73,6 @@ public class OutpatientDashboardController {
                immunization = imm;
            }
         }
-/*
-        //maternitys
-        Set<Maternal> maternalList=outpatient.getMaternals();
-        Maternal maternal = null;
-
-        for(Maternal mat:maternalList) {
-            if(mat.getOutpatient().getOutPatientId()== patientId) {
-                maternal = mat;
-            }
-        }
-
-
-      //hiv
-        Set<Hiv> hivList=outpatient.getHivs();
-        Hiv hiv = null;
-
-        for(Hiv hivObj:hivList) {
-            if(hivObj.getOutpatient().getOutPatientId()== patientId) {
-                hiv = hivObj;
-            }
-        }
-*/
-
-        //encounter
-
         Set<OutpatientEncounter>immunizationSet=null;
         List<Location> locationList=null;
         List<EncounterType>encounterTypeList=null;
@@ -123,6 +98,48 @@ public class OutpatientDashboardController {
 
         //passes
         map.put("immunization", immunization);
+
+        //maternitys
+        Set<Maternal> maternalList=outpatient.getMaternals();
+        Maternal maternal = null;
+
+        for(Maternal mat:maternalList) {
+            if(mat.getOutpatient().getOutPatientId()== patientId) {
+                maternal = mat;
+            }
+        }
+        Set<OutpatientEncounter>maternalSet=null;
+
+        if(maternal !=null)
+        {
+            maternalSet=maternal.getEncounters();
+            encounterList=maternal.getEncounters();
+        }
+
+        try {
+            locationList=Context.getLocationService().getAllLocations();
+            encounterTypeList=Context.getEncounterService().getAllEncounterTypes();
+            patientIdentifier=outpatient.getPatient().getPatientIdentifier().toString();
+
+        }
+        catch (ObjectRetrievalFailureException ex) {
+            log.warn("Error retrieving objects");
+        }
+
+
+/*
+      //hiv
+        Set<Hiv> hivList=outpatient.getHivs();
+        Hiv hiv = null;
+
+        for(Hiv hivObj:hivList) {
+            if(hivObj.getOutpatient().getOutPatientId()== patientId) {
+                hiv = hivObj;
+            }
+        }
+*/
+
+        //encounter
       //  map.put("maternal", maternal);
       //  map.put("hiv", hiv);
         //Location details
@@ -157,6 +174,8 @@ public class OutpatientDashboardController {
 
         return "redirect:outpatientDashboardForm.form?id="+id;
     }
+
+
 
 }
 

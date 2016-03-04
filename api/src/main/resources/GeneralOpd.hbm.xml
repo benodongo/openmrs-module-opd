@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.outpatient">
+
+    <class name="GeneralOpd" table="${project.parent.artifactId}_generalOpd">
+        <id name="generalOpdId" type="java.lang.Integer" column="general_opd_id">
+            <generator class="native">
+            </generator>
+        </id>
+        <discriminator column="general_opd_id" insert="false"/>
+
+        <many-to-one name="outpatient" class="Outpatient" fetch="select">
+            <column name="opd_id" not-null="true" />
+        </many-to-one>
+
+        <property name="visitDate" type="java.util.Date" column="visit_date"/>
+        <property name="hivStatus" type="java.lang.Integer" column="hiv_status" />
+        <property name="hivIntervention" type="java.lang.Integer" column="hiv_intervention" />
+        <property name="nutritionStatus" type="java.lang.Integer" column="nutrition_status" />
+        <property name="referralFrom" type="java.lang.String" column="referral_from" />
+        <property name="guardian" type="java.lang.String" column="guardian" />
+
+        <property name="createdBy" type="java.lang.String" column="created_by" />
+        <property name="dateCreated" type="java.util.Date" column="date_created" />
+        <property name="changedBy" type="java.lang.String" column="changed_by" />
+        <property name="dateChanged" type="java.util.Date" column="date_changed" />
+
+        <property name="uuid" type="java.lang.String" column="uuid"
+                  length="38" unique="true" />
+        <!-- Associations-->
+
+        <one-to-one name="treatment" class="Treatment" cascade="save-update"></one-to-one>
+
+
+        <set name="encounters"  table="outpatient_encounter" inverse="true" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="general_opd_id" not-null="true" />
+            </key>
+            <one-to-many class="OutpatientEncounter" />
+        </set>
+
+    </class>
+
+</hibernate-mapping>

@@ -47,6 +47,9 @@ public class AdminList extends AdministrationSectionExt {
 		map.put("/module/outpatient/manage.form", "outpatient.manage");
 		map.put("/findPatient.htm", "outpatient.find");
 		map.put("/module/outpatient/listOutpatient.form", "outpatient.listOutpatient");
+		map.put("/module/outpatient/listImmunization.form", "outpatient.listImmunization");
+		map.put("/module/outpatient/listMaternal.form", "outpatient.listMaternal");
+		map.put("/module/outpatient/listHiv.form", "outpatient.listHiv");
 		return map;
 	}
 	

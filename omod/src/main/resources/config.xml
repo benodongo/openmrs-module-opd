@@ -36,6 +36,8 @@
 		Maternal.hbm.xml
 		Hiv.hbm.xml
 		OutpatientEncounter.hbm.xml
+		Treatment.hbm.xml
+		GeneralOpd.hbm.xml
 				
 	</mappingFiles>
 

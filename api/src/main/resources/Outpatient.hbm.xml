@@ -44,6 +44,20 @@
             </key>
             <one-to-many class="Maternal" />
         </set>
+        <set name="hivs" table="outpatient_hiv"
+             inverse="true" lazy="true" fetch="select" cascade="all-delete-orphan">
+            <key>
+                <column name="opd_id" not-null="true" />
+            </key>
+            <one-to-many class="Hiv" />
+        </set>
+        <set name="generalOpds" table="outpatient_generalOpd"
+             inverse="true" lazy="true" fetch="select" cascade="all-delete-orphan">
+            <key>
+                <column name="opd_id" not-null="true" />
+            </key>
+            <one-to-many class="GeneralOpd" />
+        </set>
     </class>
 
 </hibernate-mapping>
