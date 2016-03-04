@@ -53,7 +53,7 @@
         </a>
     </li>
 </ul>
-
+<h2 class="text-center">Maternal Care</h2>
 <table class="table table-striped table-responsive table-hover" id="immunization_table">
     <thead>
     <tr>

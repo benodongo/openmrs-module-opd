@@ -45,6 +45,16 @@
 			<spring:message code="Immunization"/>
 		</a>
 	</li>
+	<li <c:if test='<%= request.getRequestURI().contains("/listMaternal") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/outpatient/listMaternal.form">
+			<spring:message code="Maternal"/>
+		</a>
+	</li>
+	<li <c:if test='<%= request.getRequestURI().contains("/listHiv") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/outpatient/listHiv.form">
+			<spring:message code="HivCare"/>
+		</a>
+	</li>
 	
 	<!-- Add further links here -->
 </ul>
