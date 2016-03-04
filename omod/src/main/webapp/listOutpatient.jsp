@@ -49,6 +49,7 @@
         </a>
     </li>
 </ul>
+<h2 class="text-center">Outpatient List</h2>
 <table class="table table-striped table-responsive table-hover" id="outpatient_table">
     <thead>
     <tr>
