@@ -22,6 +22,8 @@ import org.openmrs.module.outpatient.api.OutpatientService;
 import org.openmrs.module.outpatient.api.ImmunizationService;
 import org.openmrs.module.outpatient.api.MaternalService;
 import org.openmrs.module.outpatient.api.HivService;
+import org.openmrs.module.outpatient.api.GeneralOpdService;
+import org.openmrs.module.outpatient.api.TreatmentService;
 import org.openmrs.api.context.Context;
 import org.openmrs.validator.PatientIdentifierValidator;
 import org.springframework.stereotype.Controller;
@@ -384,5 +386,86 @@ public class  OutpatientManageController {
         model.addAttribute("hivList", hivs);
 
     }
+    //Save general opd Form
+    @RequestMapping(value = "/module/outpatient/saveGeneralOpd.form", method = RequestMethod.POST)
+    public String saveAGeneralOpd(ModelMap model,HttpSession httpSession,WebRequest webRequest,
+                                @RequestParam(value = "opd_id", required = true)Integer patientId,
+                                @RequestParam(value = "visit_date", required = true)Date visitDate,
+                                @RequestParam(value = "hiv_status", required = true)Integer hivStatus,
+                                @RequestParam(value = "nutrition_status", required = true)Integer nutritionStatus,
+                                @RequestParam(value = "guardian", required = true)String guardian,
+                                @RequestParam(value = "referral_from", required = true)String referralFrom,
+                                @RequestParam(value = "status", required = true)Integer hivIntervention)
+                                {
+
+        GeneralOpdService generalOpdService=Context.getService(GeneralOpdService.class);
+        OutpatientService outpatientService=Context.getService(OutpatientService.class);
+
+
+        try{
+
+            Outpatient outpatient=outpatientService.getOutpatient(patientId);
+            Patient patient=outpatient.getPatient();
+
+            //check if patient is alive
+            if(patient.getDead())
+            {
+                httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Patient is Dead");
+                return "redirect:listOutpatient.form";
+            }
+
+            //condition for generalOpdDate
+            if(visitDate==null)
+            {
+                Date date=new Date();
+            }
+            GeneralOpd generalOpd=new GeneralOpd();
+            generalOpd.setVisitDate(visitDate);
+            generalOpd.setHivStatus(hivStatus);
+            generalOpd.setNutritionStatus(nutritionStatus);
+            generalOpd.setGuardian(guardian);
+            generalOpd.setReferralFrom(referralFrom);
+            generalOpd.setHivIntervention(hivIntervention);
+            generalOpd.setChangedBy(Context.getAuthenticatedUser().toString());
+            generalOpd.setDateCreated(new Date());
+
+
+            generalOpd.setOutpatient(outpatient);
+
+                Boolean addGeneralOpd = true;
+                Set<GeneralOpd> generalOpdSet = outpatient.getGeneralOpds();
+                if (generalOpdSet != null) {
+                    for (GeneralOpd gen : generalOpdSet) {
+                        Treatment treatment = gen.getTreatment();
+
+                        if (treatment == null) {
+                            addGeneralOpd = false;
+                            break;
+                        }
+
+                    }
+                }
+
+                if (addGeneralOpd) {
+
+                    generalOpdService.saveGeneralOpd(generalOpd);
+
+                    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Added  details Successfully");
+                } else {
+                    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Patient not yet treated");
+                }
+            }
+        catch (Exception ex)
+        {
+            httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "Failed to save generalOpd details");
+            return "redirect:processRequest.form?id="+patientId;
+
+        }
+
+
+        return "redirect:processRequest.form?id="+patientId;
+
+    }
+
 
 }

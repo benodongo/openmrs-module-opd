@@ -20,6 +20,9 @@
         <many-to-one name="hiv" class="Hiv" fetch="select">
             <column name="hiv_id" not-null="true" />
         </many-to-one>
+        <many-to-one name="generalOpd" class="GeneralOpd" fetch="select">
+            <column name="general_opd_id" not-null="true" />
+        </many-to-one>
 
 
     </joined-subclass>
