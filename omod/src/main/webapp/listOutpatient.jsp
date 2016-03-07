@@ -69,7 +69,7 @@
 
         <tr>
             <td class='clickable-row bg-info'
-                data-href="<c:url value='/module/outpatient/listEncounter.form?id=${immunization.immunizationId}' />">
+                data-href="<c:url value='/module/outpatient/processRequest.form?id=${outpatient.patient.patientId}' />">
                     ${count}
             </td>
             <td>${outpatient.opdId}</td>

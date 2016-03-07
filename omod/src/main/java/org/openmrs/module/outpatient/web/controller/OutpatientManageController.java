@@ -379,9 +379,9 @@ public class  OutpatientManageController {
         List<Hiv> hivList=hivService.getAllHiv();
         List<Hiv> hivs=new ArrayList<Hiv>();
 
-        for(Hiv hivObj:hivList)
+        for(Hiv hv:hivList)
         {
-            hivs.add(hivObj);
+            hivs.add(hv);
         }
         model.addAttribute("hivList", hivs);
 

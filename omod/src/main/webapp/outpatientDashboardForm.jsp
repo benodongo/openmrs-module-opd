@@ -16,7 +16,7 @@
             $('#encounter_table').dataTable({
                 "sDom": '<"top"f>rt<"bottom"lp><"clear">'
             });
-
+            $('#admissionDate').datetimepicker();
             $('#visitDate').datetimepicker();
             $('#bcgDate').datetimepicker();
             $('#polio1Date').datetimepicker();
@@ -125,23 +125,45 @@
                     &nbsp;${outpatient.patient.familyName}
                 </h3>
                 <h4 class="pull-right">Outpatient ID-${patientIdentifier}&nbsp;
-                    outpatient ID-${outpatient.opdId}
+                    <%--outpatient ID-${outpatient.opdId} --%>
                 </h4>
 
                 <h4 class="panel-title">Age-${outpatient.patient.age}(${outpatient.patient.birthdate})</h4>
             </div>
             <div class="panel-body">
                 <div role="tabpanel">
+                    <c:set var="age" scope="session" value="${outpatient.patient.age}"/>
+                    <c:if test="${age <= 5}">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#overview" aria-controls="home" role="tab" data-toggle="tab">Overview</a></li>
                         <li role="presentation"><a href="#generalOpd" aria-controls="admission" role="tab" data-toggle="tab">General OPD clinic</a></li>
                         <li role="presentation"><a href="#immunization" aria-controls="immunization" role="tab" data-toggle="tab">Child Clinic</a></li>
-                        <li role="presentation"><a href="#maternal" aria-controls="maternal" role="tab" data-toggle="tab">Maternal Care</a></li>
                         <li role="presentation"><a href="#hiv" aria-controls="hiv" role="tab" data-toggle="tab">HIV Care</a></li>
                         <li role="presentation"><a href="#demographics" aria-controls="orders" role="tab" data-toggle="tab">Demographics</a></li>
                     </ul>
-
+                     </c:if>
+                    <c:if test="${age >5}">
+                        <c:if test="${gender == 'M'}">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#overview" aria-controls="home" role="tab" data-toggle="tab">Overview</a></li>
+                            <li role="presentation"><a href="#generalOpd" aria-controls="admission" role="tab" data-toggle="tab">General OPD clinic</a></li>
+                            <li role="presentation"><a href="#hiv" aria-controls="hiv" role="tab" data-toggle="tab">HIV Care</a></li>
+                            <li role="presentation"><a href="#demographics" aria-controls="orders" role="tab" data-toggle="tab">Demographics</a></li>
+                        </ul>
+                            </c:if>
+                    </c:if>
+                    <c:if test="${age >5}">
+                        <c:if test="${gender == 'F'}">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#overview" aria-controls="home" role="tab" data-toggle="tab">Overview</a></li>
+                            <li role="presentation"><a href="#generalOpd" aria-controls="admission" role="tab" data-toggle="tab">General OPD clinic</a></li>
+                            <li role="presentation"><a href="#maternal" aria-controls="maternal" role="tab" data-toggle="tab">Maternal Care</a> </li>
+                            <li role="presentation"><a href="#hiv" aria-controls="hiv" role="tab" data-toggle="tab">HIV Care</a></li>
+                            <li role="presentation"><a href="#demographics" aria-controls="orders" role="tab" data-toggle="tab">Demographics</a></li>
+                        </ul>
+                            </c:if>
+                    </c:if>
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="overview">
@@ -578,7 +600,7 @@
                         <div class="form-group col-md-offset-2 col-md-8">
                             <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveImmunization.form' />">
 
-                                <input id="opdId" type="hidden" name="opd_id" value="${outpatient.patient.patientId}" required />
+                                <input id="opdId" value="${outpatient.patient.patientId}" type="hidden" name="opd_id"  required />
                                 <div class="form-group">
                                     <label>BCG date</label>
                                     <div class='input-group date' id='bcgDate'>
