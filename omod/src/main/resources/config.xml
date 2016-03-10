@@ -37,6 +37,7 @@
 		Hiv.hbm.xml
 		OutpatientEncounter.hbm.xml
 		Treatment.hbm.xml
+		Vital.hbm.xml
 		GeneralOpd.hbm.xml
 				
 	</mappingFiles>

@@ -73,7 +73,7 @@
     <c:set var="count" value="0" scope="page" />
     <c:forEach var="maternal" items="${maternalList}" varStatus="status">
         <tr class='clickable-row'
-            data-href="<c:url value='/module/outpatient/processRequest.form?id=${maternal.maternalId}' />">
+            data-href="<c:url value='/module/outpatient/processRequest.form?id=${maternal.outpatient.opdId}' />">
             <c:set var="count" value="${count + 1}" scope="page"/>
             <td>${count}</td>
             <td>${maternal.outpatient.opdId}</td>

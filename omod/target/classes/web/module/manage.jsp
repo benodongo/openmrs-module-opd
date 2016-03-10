@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class="col-md-2">
-                <div class="dash"><a style="text-decoration: none" href="<c:url value='/module/outpatient/captureVitals.form'/>"><img src="${pageContext.request.contextPath}/moduleResources/outpatient/img/heartbeat.png" class="imgur"><div>Capture Vitals</div></div>
+                <div class="dash"><a style="text-decoration: none" href="<c:url value='/module/outpatient/listOutpatient.form'/>"><img src="${pageContext.request.contextPath}/moduleResources/outpatient/img/heartbeat.png" class="imgur"><div>Capture Vitals</div></div>
                 <br>
 
                 </a>

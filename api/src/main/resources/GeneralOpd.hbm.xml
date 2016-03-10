@@ -32,7 +32,8 @@
                   length="38" unique="true" />
         <!-- Associations-->
 
-        <one-to-one name="treatment" class="Treatment" cascade="save-update"></one-to-one>
+        <one-to-one name="treatment" class="Treatment" cascade="save-update"/>
+        <one-to-one name="vital" class="Vital" cascade="save-update"/>
 
 
         <set name="encounters"  table="outpatient_encounter" inverse="true" lazy="true" fetch="select" cascade="all">

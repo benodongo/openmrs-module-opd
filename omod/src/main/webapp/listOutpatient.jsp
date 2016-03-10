@@ -69,7 +69,7 @@
 
         <tr>
             <td class='clickable-row bg-info'
-                data-href="<c:url value='/module/outpatient/processRequest.form?id=${outpatient.patient.patientId}' />">
+                data-href="<c:url value='/module/outpatient/processRequest.form?id=${outpatient.opdId}' />">
                     ${count}
             </td>
             <td>${outpatient.opdId}</td>
@@ -93,107 +93,3 @@
     </c:forEach>
     </tbody>
 </table>
-<!--pop up the immunization form -->
-<div class="modal fade" id="immunizationModal" tabindex="-1" role="dialog" aria-labelledby="immunizationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="immunizationModalLabel">Register Immunization</h4>
-            </div>
-
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group col-md-offset-2 col-md-8">
-                        <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveImmunization.form' />">
-
-                            <input id="opdId" type="hidden" name="opd_id"  required />
-
-                            <%--<div class="form-group">--%>
-                            <%--<label>Admission Date</label>--%>
-                            <%--<input type="date" class="form-control" name="admission_date"   required />--%>
-                            <%--</div>--%>
-                            <div class="form-group">
-                                <label>BCG date</label>
-                                <div class='input-group date' id='bcgDate'>
-                                    <input type='text' class="form-control" name="bcg_date" required />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Polio 1 date</label>
-                                <div class='input-group date' id='polio1Date'>
-                                    <input type='text' class="form-control" name="polio1_date" required />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Polio 2 date</label>
-                                <div class='input-group date' id='polio2Date'>
-                                    <input type='text' class="form-control" name="polio2_date" required />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Polio 3 date</label>
-                                <div class='input-group date' id='polio3Date'>
-                                    <input type='text' class="form-control" name="polio3_date" required />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Measles date</label>
-                                <div class='input-group date' id='measlesDate'>
-                                    <input type='text' class="form-control" name="measles_date" required />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Yellow Fever Date</label>
-                                <div class='input-group date' id='yellowFeverDate'>
-                                    <input type='text' class="form-control" name="yellow_fever_date" required />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Pneumococcal Date</label>
-                                <div class='input-group date' id='pcv'>
-                                    <input type='text' class="form-control" name="pcv" required />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
-                            </div>
-
-
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-            <%--<div class="modal-footer">--%>
-            <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
-            <%--&lt;%&ndash;<button type="submit" class="btn btn-primary">Save</button>&ndash;%&gt;--%>
-            <%--</div>--%>
-        </div>
-    </div>
-</div>

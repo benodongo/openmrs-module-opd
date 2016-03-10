@@ -16,6 +16,7 @@ import org.openmrs.module.outpatient.api.OutpatientEncounterService;
 import org.openmrs.module.outpatient.api.OutpatientService;
 import org.openmrs.module.outpatient.api.MaternalService;
 import org.openmrs.module.outpatient.api.HivService;
+import org.openmrs.module.outpatient.api.GeneralOpdService;
 import org.openmrs.module.web.extension.provider.Link;
 import org.openmrs.util.MetadataComparator;
 import org.openmrs.util.OpenmrsConstants;
@@ -64,8 +65,43 @@ public class OutpatientDashboardController {
 
          log.debug("outpatient: '" + outpatient + "'");
           map.put("outpatient", outpatient);
+        //General outpatient Visit
+        Set<GeneralOpd> generalOpdList=outpatient.getGeneralOpds();
+        GeneralOpd generalOpd = null;
+
+        for(GeneralOpd gopd:generalOpdList) {
+            if(gopd.getOutpatient().getOutPatientId()== patientId) {
+                generalOpd = gopd;
+            }
+        }
+        Set<OutpatientEncounter>generalOpdSet=null;
+        List<Location> locationList=null;
+        List<EncounterType>encounterTypeList=null;
+        Set<OutpatientEncounter>encounterList=null;
+        String patientIdentifier=null;
+
+
+        if(generalOpd !=null)
+        {
+            generalOpdSet=generalOpd.getEncounters();
+            encounterList=generalOpd.getEncounters();
+        }
+
+        try {
+            locationList=Context.getLocationService().getAllLocations();
+            encounterTypeList=Context.getEncounterService().getAllEncounterTypes();
+            patientIdentifier=outpatient.getPatient().getPatientIdentifier().toString();
+
+        }
+        catch (ObjectRetrievalFailureException ex) {
+            log.warn("Error retrieving objects");
+        }
+
+        //passes
+        map.put("generalOpd", generalOpd);
+
         //immunizations
-        Set<Immunization> immunizationList=outpatient.getImmunizations();
+      /*  Set<Immunization> immunizationList=outpatient.getImmunizations();
         Immunization immunization = null;
 
         for(Immunization imm:immunizationList) {
@@ -98,7 +134,7 @@ public class OutpatientDashboardController {
 
         //passes
         map.put("immunization", immunization);
-
+*/
         //maternitys
         Set<Maternal> maternalList=outpatient.getMaternals();
         Maternal maternal = null;

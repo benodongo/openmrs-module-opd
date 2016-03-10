@@ -457,6 +457,8 @@
                                         <li><a  data-toggle="pill" href="#profile">List Encounters</a></li>
                                         <li><a  data-toggle="modal" href=""  data-id="${generalOpd.generalOpdId}" data-target="#treatmentModal">
                                             <i class="fa fa-check-square-o"></i>Treatment</a></li>
+                                        <li><a  data-toggle="modal" href=""  data-id="${generalOpd.generalOpdId}" data-target="#vitalModal">
+                                            <i class="fa fa-plus-square"></i>Capture Vitals</a></li>
                                     </ul>
 
                                     <!-- Tab panes -->
@@ -985,7 +987,7 @@
                             <input id="admissionId" type="hidden" class="form-control" name="discharge_id"  required />
 
                             <div class="form-group">
-                                <label>Discharge Date</label>
+                                <label>Visit Date</label>
                                 <div class='input-group date' id='visitDate'>
                                     <input type='text' class="form-control" name="discharge_date"/>
                                         <span class="input-group-addon">
@@ -1035,6 +1037,74 @@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success">Submit</button>
                             </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+            <%--<div class="modal-footer">--%>
+            <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
+            <%--&lt;%&ndash;<button type="submit" class="btn btn-primary">Save</button>&ndash;%&gt;--%>
+            <%--</div>--%>
+        </div>
+    </div>
+</div>
+<%-- capture vitals modal --%>
+<div class="modal fade" id="vitalModal" tabindex="-1" role="dialog" aria-labelledby="vitalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="vitalModalLabel">Capture Vitals </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-offset-2 col-md-8">
+                        <form class="form-horizontal" method="post"  action="<c:url value='/module/outpatient/saveVital.form' />">
+
+                            <input id="vitalsId" type="hidden" class="form-control" name="vitals_id"  required />
+
+                            <div class="form-group">
+                                <label>Height</label>
+                                <input type="text" class="form-control" name="height"   required />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Weight</label>
+                                <input type="text" class="form-control" name="weight"   required />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Calculated BMI</label>
+                                <input type="Text" class="form-control" name="bmi"  value="" />
+                            </div>
+                            <div class="form-group">
+                                <label>Temperature (c)</label>
+                                <input type="Text" class="form-control" name="temperature"   />
+                            </div>
+                            <div class="form-group">
+                                <label>Pulse</label>
+                                <input type="Text" class="form-control" name="pulse"   />
+                            </div>
+                            <div class="form-group">
+                                <label>Respiratory Rate</label>
+                                <input type="Text" class="form-control" name="resp"   />
+                            </div>
+                            <div class="form-group">
+                                <label>Blood Pressure</label>
+                                <input type="Text" class="form-control" name="pressure"   />
+                            </div>
+                            <div class="form-group">
+                                <label>Blood Oxygen Saturation</label>
+                                <input type="Text" class="form-control" name="oxygen"   />
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+
                         </form>
                     </div>
 
